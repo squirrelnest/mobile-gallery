@@ -37,11 +37,10 @@ tools.onclick = function (event) {
   this.classList.remove('showOverlay');
 }
 
-const backBtn = document.createElement('DIV')
-let action = document.createElement('IMG')
-action.src = 'icons/back.svg'
-action.id = 'backBtn'
-backBtn.appendChild(action)
+const backBtn = document.createElement('IMG')
+backBtn.src = 'icons/back.svg'
+backBtn.id = 'backBtn'
+backBtn.className = 'icon'
 backBtn.onclick = (event) => { closeSlide(); }
 
 const closeBtn = document.createElement('H1')
@@ -73,6 +72,7 @@ footerIcons.forEach(icon => {
   let action = document.createElement('IMG')
   action.src = icon.url
   action.id = icon.name
+  action.className = 'icon'
   footer.appendChild(action)
 })
 document.getElementById('tools').appendChild(footer)

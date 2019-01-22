@@ -37,29 +37,30 @@ a:hover, Link:hover, .link:hover {
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: 100;
-  margin: 0px;
+  margin: 0;
+  line-height: 1rem;
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: 1.2rem;
 }
 
 h2 {
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 h3 {
-  font-size: 1.5rem;
+  font-size: 0.8rem;
 }
 
 h4 {
-  font-size: 1.2rem;
+  font-size: 0.7rem;
   letter-spacing: 1px;
   line-height: 1.5;
 }
 
 h5 {
-  font-size: 0.9rem;
+  font-size: 0.6rem;
   letter-spacing: 0.5px;
   line-height: 1.5;
 }
@@ -115,8 +116,7 @@ h5 {
   color: white;
   background-color: rgb(51, 51, 51);
   width: 100%;
-  padding: 20px;
-  font-size: 20px;
+  padding: 1rem 2rem;
   text-align: center;
   visibility: inherit;
 }
@@ -124,19 +124,19 @@ h5 {
 .titlebar {
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  align-content: center;
+  align-items: center;
 }
 
 .footer {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  padding: 30px;
 }
 
-.closeBtn {
-  float: right;
-  padding-right: 20px;
+.icon {
+  width: 1.2rem;
+  height: 1rem;
+  vertical-align: middle;
 }
 
 /* TRANSITIONS ****************/
@@ -158,6 +158,8 @@ h5 {
   display: flex;
   position: absolute;
 }
+
+/* MEDIA QUERIES ***************/
 
 @media only screen and (max-width: 400px) {
 
