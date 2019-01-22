@@ -1,5 +1,7 @@
 // GLOBALS
 
+var selected;
+
 // IMAGE ASSETS - to be replaced with API
 
 const photos = [
@@ -13,7 +15,7 @@ const photos = [
     {id: 8, url: 'images/racecar.jpg', name: 'racecar'}
   ]
 
-const icons = [
+const footerIcons = [
     {id: 'plusOne', url: 'icons/plusOne.svg', name: 'plusOne'},
     {id: 'comment', url: 'icons/comment.svg', name: 'comment'},
     {id: 'add', url: 'icons/add.svg', name: 'add'},
@@ -27,22 +29,40 @@ tools.onclick = function () {
   this.classList.remove('showOverlay')
 }
 
-const closeBtn = document.createElement("DIV")
+const backBtn = document.createElement("DIV")
+let action = document.createElement("IMG")
+action.src = 'icons/back.svg'
+action.id = 'backBtn'
+backBtn.appendChild(action)
+
+const closeBtn = document.createElement("H1")
 closeBtn.className = 'closeBtn'
 closeBtn.innerHTML = '&#10005;'
 closeBtn.onclick = function () {
   document.getElementsByClassName('isAnimating')[0].classList.remove('isAnimating')
 }
 
+const titleText = (text='default') => {
+  let photoTitle = document.createElement("DIV")
+  let h1 = document.createElement("H1")
+  let textNode = document.createTextNode(text)
+  h1.appendChild(textNode);
+  photoTitle.appendChild(h1)
+  photoTitle.id = 'titleText'
+  return photoTitle
+}
+
 const titlebar = document.createElement("DIV")
+titlebar.id = 'titlebar'
 titlebar.className = 'tool titlebar'
-titlebar.innerHTML = selected
+titlebar.appendChild(backBtn)
+titlebar.appendChild(titleText())
 titlebar.appendChild(closeBtn)
 document.getElementById('tools').appendChild(titlebar)
 
 const footer = document.createElement("DIV")
 footer.className = 'tool footer'
-icons.forEach(icon => {
+footerIcons.forEach(icon => {
   let action = document.createElement("IMG")
   action.src = icon.url
   action.id = icon.name
@@ -51,8 +71,6 @@ icons.forEach(icon => {
 document.getElementById('tools').appendChild(footer)
 
 // GALLERY
-
-var selected = '';
 
 photos.forEach(photo => {
   // create tile to contain image
@@ -66,7 +84,8 @@ photos.forEach(photo => {
   // handle clicks
   tile.onclick = function (event) {
     selected = event.target.title
-    console.log(event.target.title)
+    let newTitle = titleText(selected)
+    document.getElementById('titlebar').replaceChild(newTitle, document.getElementById('titleText'))
     this.classList.add('isAnimating')
     tools.classList.add('showOverlay')
   };
