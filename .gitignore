@@ -1,0 +1,28 @@
+# Logs
+logs
+*.log
+
+# Dependencies
+node_modules
+
+# Build artifacts
+.idea
+/build
+build
+dist
+package-lock.json
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# settings
+.history/
+.vscode/
+typings/
+jsconfig.json
+typings.json
+.lock-wscript

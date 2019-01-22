@@ -1,0 +1,238 @@
+/* GLOBAL RESETS *************************************/
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  width: 100vw;
+  overflow-X: hidden;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #F7F7F7;
+  color: #222;
+  font-size: 16px; /* FF does not let you override its minimum font-size */
+}
+
+.screen {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+/* COLORS *******************/
+
+.darkgrey {
+  color: #222;
+}
+
+.lightgrey {
+  color: #999;
+}
+
+.lightestgrey {
+  color: #ccc;
+}
+.purple {
+  background-color: purple;
+}
+
+/* TEXT *******************/
+
+p, span {
+  font-size: 1em;
+  hyphens: none;
+  text-align: left;
+  margin: 0;
+}
+
+a {
+  color: currentColor;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+a:hover, Link:hover, .link:hover {
+  color: #fc9414;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #222;
+  margin: 0px;
+}
+
+h1 {
+  font-weight: 600;
+  font-size: 2rem;
+}
+
+h2 {
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-weight: 400;
+  font-size: 1.5rem;
+}
+
+h4 {
+  font-weight: 300;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  line-height: 1.5;
+}
+
+h5 {
+  font-weight: 100;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  line-height: 1.5;
+}
+
+/* LABELS *******************/
+
+label {
+  display: block;
+  text-align: left;
+  margin-bottom: 5px;
+  font-size: .8rem ;
+  color: #999;
+  letter-spacing: 0px;
+  -webkit-transition: all .2s ease;
+}
+
+/* IMAGES *******************/
+
+.tile {
+  background-repeat: none;
+}
+
+/* ERROR MESSAGES *******************/
+
+.error {
+  display: block;
+  background: red;
+  padding: 20px;
+  border: 1px solid red;
+  line-height: 1;
+  color: white;
+  position: fixed;
+}
+
+/* LAYOUT *******************/
+
+.header {
+  display: block;
+  position: fixed;
+  width: 100%;
+  text-align: center;
+  background-color: rgb(245, 245, 245);
+  border-bottom: 2px solid rgb(227, 227, 227);
+  padding: 20px;
+  font-size: 20px;
+  z-index: 2;
+}
+
+.gallery {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-gap: 16px;
+  padding: 80px 16px;
+}
+
+.tile {
+  display: block;
+  overflow: hidden;
+  background-color: rgba(0,0,0,0);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 150px;
+  z-index: 1;
+}
+
+.tools {
+  visibility: hidden;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
+  z-index: 4;
+}
+
+.tool {
+  color: white;
+  background-color: rgb(51, 51, 51);
+  width: 100%;
+  padding: 20px;
+  font-size: 20px;
+  text-align: center;
+  visibility: inherit;
+}
+
+.titlebar {
+  font-size: 40px;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 30px;
+}
+
+.closeBtn {
+  float: right;
+  padding-right: 20px;
+}
+
+/* ANIMATION ****************/
+
+.isAnimating {
+  transition-property: background-color, height;
+  transition-duration: .3s;
+  transition-timing-function: ease;
+  background-color: rgba(0,0,0,0.9);
+  background-size: contain;
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  z-index: 3;
+}
+
+.showOverlay {
+  visibility: visible;
+  display: flex;
+  position: absolute;
+}
+
+/* @keyframes scaleUp {
+  0%   {width: 150px;}
+  100% {
+        width: 100%;
+        height: 100vh;
+        position: absolute;
+        background-size: contain;
+       }
+} */
+
+/* RESPONSIVE STYLES *******************/
+
+@media(max-width: 600px) {
+
+  .center {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    transform: none;
+  }
+
+}
