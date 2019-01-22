@@ -33,7 +33,7 @@ const footerIcons = [
 // OVERLAY
 
 const tools = document.getElementById('tools')
-tools.onclick = function () {
+tools.onclick = function (event) {
   this.classList.remove('showOverlay');
 }
 
@@ -108,8 +108,11 @@ photos.forEach(photo => {
 // INTERACTIONS
 
 getNextImage = () => {
-  currentNode.classList.toggle('openSlide')
+  currentNode.classList.remove('openSlide')
   currentNode.style.transform = null
+  currentNode.ontouchstart = null
+  currentNode.ontouchmove = null
+  currentNode.ontouchend = null
   let next = document.getElementById(currentId)
   next.classList.add('openSlide')
   next.ontouchstart = (event) => { handleTouchStart(event) }
@@ -121,9 +124,14 @@ closeSlide = () => {
   event.preventDefault()
   document.getElementsByClassName('openSlide')[0].classList.remove('openSlide')
   document.documentElement.style.overflow = 'auto'
+  currentNode.classList.remove('openSlide')
+  currentNode.ontouchstart = null
+  currentNode.ontouchmove = null
+  currentNode.ontouchend = null
 }
 
 handleTouchStart = (event) => {
+  event.preventDefault()
   currentNode = document.getElementById(event.target.id)
   rect = currentNode.getBoundingClientRect()
   // record where finger first touched screen
@@ -142,8 +150,8 @@ handleTouchMove = (event) => {
 }
 
 handleTouchEnd = (event) => {
-  if (destinationX === 0) { return; }
-  if (Math.abs(endX - startX) > document.getElementById('gallery').clientWidth/6) {
+  event.stopPropagation()
+  if (Math.abs(endX - startX) >= document.getElementById('gallery').clientWidth/6) {
     if ((endX - startX) > 0) {
       // if swipe right, go forward one image
       if (currentId == photos.length) {
@@ -160,6 +168,11 @@ handleTouchEnd = (event) => {
       }
     }
     getNextImage()
+  } else if (event.targetTouches.length === 0 || destinationX === 0) {
+    tools.classList.add('showOverlay')
+    destinationX = 0
+    currentNode.style.transform = `translate3d(${-(destinationX-originX)}px, 0, 0)`
+    currentNode.style.position = 'absolute'
   } else {
     // snap back into original place if swipe accidental
     destinationX = 0
