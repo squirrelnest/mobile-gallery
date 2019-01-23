@@ -1,14 +1,13 @@
 // STATE
 
-var currentNode = document.documentElement;
-var currentId;
-var selectedTitle;
-var rect = currentNode.getBoundingClientRect();
-var originX = 0;
-var startX = 0;
-var endX = 0;
-var destinationX = 0;
-var list;
+var currentNode = document.documentElement; // selected node
+var currentId; // id of selected node
+var selectedTitle; // title of selected node
+var rect = currentNode.getBoundingClientRect(); // bounding box of selected node
+var startX = 0; // first x-coordinate of contact point
+var endX = 0; // final x-coordinate of contact point
+var originX = 0; // first x-coordinate of left edge of bounding box
+var destinationX = 0; // final x-coordinate of left edge of bounding box
 
 // IMAGE ASSETS - to be replaced with API
 
@@ -96,7 +95,7 @@ photos.forEach(photo => {
 
 // INTERACTIONS
 
-getNextImage = () => {
+const getNextImage = () => {
   // deactivate current node
   currentNode.classList.remove('openSlide')
   currentNode.style.transform = null
@@ -114,13 +113,13 @@ getNextImage = () => {
   updateTitle()
 }
 
-updateTitle = () => {
+const updateTitle = () => {
   selectedTitle = currentNode.title
   let newTitle = titleText(selectedTitle)
   document.getElementById('titlebar').replaceChild(newTitle, document.getElementById('titleText'))
 }
 
-openSlide = (event) => {
+const openSlide = (event) => {
   currentId = event.target.id
   currentNode = document.getElementById(event.target.id)
   updateTitle()
@@ -132,7 +131,7 @@ openSlide = (event) => {
   document.getElementById(currentId).ontouchend = (event) => { handleTouchEnd(event); }
 }
 
-closeSlide = (event) => {
+const closeSlide = (event) => {
   event.stopPropagation()
   tools.classList.remove('showOverlay')
   currentNode.classList.remove('openSlide')
@@ -141,11 +140,10 @@ closeSlide = (event) => {
   currentNode.ontouchend = null
 }
 
-// EVENT HANDLERS
+// TOUCH EVENT HANDLERS
 
-handleTouchStart = (event) => {
+const handleTouchStart = (event) => {
   event.preventDefault()
-  currentNode = document.getElementById(event.target.id)
   rect = currentNode.getBoundingClientRect()
   // record where finger first touched screen
   startX = event.touches[0].clientX
@@ -153,7 +151,7 @@ handleTouchStart = (event) => {
   originX = startX - rect.left
 }
 
-handleTouchMove = (event) => {
+const handleTouchMove = (event) => {
   for(var i=0; i<event.touches.length; i++) {
     endX = event.touches[i].clientX
     destinationX = endX - rect.left
@@ -162,7 +160,7 @@ handleTouchMove = (event) => {
   originX = 0
 }
 
-handleTouchEnd = (event) => {
+const handleTouchEnd = (event) => {
   event.stopPropagation()
   if (Math.abs(endX - startX) >= document.getElementById('gallery').clientWidth/6) {
     if ((endX - startX) > 0) {
