@@ -105,7 +105,7 @@ photos.forEach(photo => {
   }
 })
 
-// INTERACTIONS
+// TASKS
 
 getNextImage = () => {
   currentNode.classList.remove('openSlide')
@@ -129,6 +129,8 @@ closeSlide = () => {
   currentNode.ontouchmove = null
   currentNode.ontouchend = null
 }
+
+// INTERACTIONS
 
 handleTouchStart = (event) => {
   event.preventDefault()
@@ -172,7 +174,6 @@ handleTouchEnd = (event) => {
     tools.classList.add('showOverlay')
     destinationX = 0
     currentNode.style.transform = `translate3d(${-(destinationX-originX)}px, 0, 0)`
-    currentNode.style.position = 'absolute'
   } else {
     // snap back into original place if swipe accidental
     destinationX = 0
