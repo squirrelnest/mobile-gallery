@@ -13,8 +13,13 @@ export const openSlide = (event) => {
   currentId = event.target.id
   currentNode = document.getElementById(currentId)
   updateTitle()
+  // change styles
   currentNode.classList.add('openSlide')
-  tools.classList.add('showOverlay')
+  tools.classList.add('show')
+  tools.classList.add('openOverlay')
+  scrim.classList.add('show')
+  scrim.classList.add('fadeIn')
+  // attach event handlers
   currentNode.ontouchstart = (event) => { handleTouchStart(event); }
   currentNode.ontouchmove = (event) => { handleTouchMove(event); }
   currentNode.ontouchend = (event) => { handleTouchEnd(event); }
@@ -58,11 +63,16 @@ export const titleText = (text='default') => {
 export const closeSlide = (event) => {
   event.preventDefault()
   event.stopPropagation()
-  tools.classList.remove('showOverlay')
+  // detach event handlers
   currentNode.classList.remove('openSlide')
   currentNode.ontouchstart = null
   currentNode.ontouchmove = null
   currentNode.ontouchend = null
+  // change styles
+  scrim.classList.replace('fadeIn', 'fadeOut')
+  scrim.classList.remove('show')
+  tools.classList.remove('show')
+  tools.classList.remove('openOverlay')
 }
 
 // TOUCH EVENT HANDLERS
@@ -102,7 +112,8 @@ export const handleTouchEnd = (event) => {
     getNextImage()
   } else {
     // snap back into original place if swipe accidental
-    tools.classList.toggle('showOverlay')
+    tools.classList.toggle('show')
+    tools.classList.toggle('openOverlay')
     currentNode.style.transform = `translate3d(0, 0, 0)`
   }
 }

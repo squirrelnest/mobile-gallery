@@ -30,7 +30,7 @@ const footerIcons = [
 // OVERLAY
 
 const tools = document.getElementById('tools')
-tools.onclick = () => { tools.classList.toggle('showOverlay'); }
+tools.onclick = () => { tools.classList.toggle('show'); }
 tools.ontouchstart = (event) => { handleTouchStart(event); }
 tools.ontouchmove = (event) => { handleTouchMove(event); }
 tools.ontouchend = (event) => { handleTouchEnd(event); }
@@ -79,3 +79,8 @@ photos.forEach(photo => {
   tile.onclick = (event) => { openSlide(event); }
   document.getElementById('gallery').appendChild(tile)
 })
+
+const scrim = document.createElement('DIV')
+scrim.id = 'scrim'
+scrim.className = 'scrim'
+document.getElementById('gallery').prepend(scrim)

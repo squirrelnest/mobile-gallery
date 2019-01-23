@@ -66,12 +66,6 @@ h5 {
 
 /* LAYOUT *******************/
 
-.wrapper {
-  height: 100%;
-  width: 100%;
-  position: relative;
-}
-
 .header {
   display: block;
   position: fixed;
@@ -79,7 +73,7 @@ h5 {
   text-align: center;
   background-color: rgb(245, 245, 245);
   border-bottom: 2px solid rgb(227, 227, 227);
-  padding: 20px;
+  padding: 1rem;
   z-index: 2;
 }
 
@@ -91,7 +85,18 @@ h5 {
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   grid-auto-rows: 120px;
   grid-gap: 16px;
-  padding: 80px 16px 16px;
+  padding: 4.4rem 1rem 1rem;
+}
+
+.scrim {
+  visibility: hidden;
+  display: block;
+  background-color: black;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  position: fixed;
+  top: 0;
 }
 
 .tile {
@@ -100,20 +105,23 @@ h5 {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  height: 100%;
   z-index: 1;
 }
 
 .tools {
   visibility: hidden;
-  display: none;
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
+  height: 120%;
   width: 100%;
   background-color: transparent;
   position: absolute;
   z-index: 4;
+  margin: -10% 0;
+  transition-property: height, margin;
+  transition-duration: .3s;
+  transition-timing-function: ease;
 }
 
 .tool {
@@ -122,19 +130,13 @@ h5 {
   width: 100%;
   padding: 1rem 2rem;
   text-align: center;
-  visibility: inherit;
 }
 
-.titlebar {
+.titlebar, .footer {
   display: flex;
   justify-content: space-between;
   align-content: center;
   align-items: center;
-}
-
-.footer {
-  display: flex;
-  justify-content: space-between;
 }
 
 .icon {
@@ -145,11 +147,33 @@ h5 {
 
 /* TRANSITIONS ****************/
 
+@keyframes bubble {
+  0%   {background-size: 0%;}
+  50%  {background-size: 120%;}
+  100% {background-size: 100%;}
+}
+
+@keyframes fade {
+  0%   {opacity: 1; visibility: visible;}
+  100% {opacity: 0; visibility: hidden;}
+}
+
+.fadeOut {
+  animation: fade .3s ease 1;
+  animation-direction: forwards;
+  animation-fill-mode: forwards;
+}
+
+.fadeIn {
+  animation: fade .3s ease 1 reverse;
+  animation-fill-mode: forwards;
+}
+
 .openSlide {
-  transition-property: background-color, height;
-  transition-duration: .3s;
-  transition-timing-function: ease;
-  background-color: rgba(0,0,0,0.9);
+  animation-name: bubble;
+  animation-duration: .4s;
+  animation-timing-function: ease;
+  animation-fill-mode: forwards;
   background-size: contain;
   width: 100%;
   height: 100%;
@@ -158,9 +182,13 @@ h5 {
   top: 0;
 }
 
-.showOverlay {
+.show {
   visibility: visible;
-  display: flex;
+}
+
+.openOverlay {
+  height: 100%;
+  margin: 0;
 }
 
 /* MEDIA QUERIES ***************/
