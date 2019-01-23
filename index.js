@@ -2,12 +2,8 @@
 
 var currentNode = document.documentElement; // selected node
 var currentId; // id of selected node
-var selectedTitle; // title of selected node
-var rect = currentNode.getBoundingClientRect(); // bounding box of selected node
 var startX = 0; // first x-coordinate of contact point
 var endX = 0; // final x-coordinate of contact point
-var originX = 0; // first x-coordinate of left edge of bounding box
-var destinationX = 0; // final x-coordinate of left edge of bounding box
 
 // IMAGE ASSETS - to be replaced with API
 
@@ -120,14 +116,13 @@ const updateTitle = () => {
 
 const openSlide = (event) => {
   currentId = event.target.id
-  currentNode = document.getElementById(event.target.id)
+  currentNode = document.getElementById(currentId)
   updateTitle()
   currentNode.classList.add('openSlide')
   tools.classList.add('showOverlay')
-  // handle swipe
-  document.getElementById(currentId).ontouchstart = (event) => { handleTouchStart(event); }
-  document.getElementById(currentId).ontouchmove = (event) => { handleTouchMove(event); }
-  document.getElementById(currentId).ontouchend = (event) => { handleTouchEnd(event); }
+  currentNode.ontouchstart = (event) => { handleTouchStart(event); }
+  currentNode.ontouchmove = (event) => { handleTouchMove(event); }
+  currentNode.ontouchend = (event) => { handleTouchEnd(event); }
 }
 
 const closeSlide = (event) => {
@@ -144,25 +139,19 @@ const closeSlide = (event) => {
 
 const handleTouchStart = (event) => {
   event.preventDefault()
-  rect = currentNode.getBoundingClientRect()
-  // record where finger first touched screen
   startX = event.touches[0].clientX
-  // set starting point for left position of selected image
-  originX = startX - rect.left
 }
 
 const handleTouchMove = (event) => {
-  for(var i=0; i<event.touches.length; i++) {
+  for (var i=0; i<event.touches.length; i++) {
     endX = event.touches[i].clientX
-    destinationX = endX - rect.left
     currentNode.style.transform = `translate3d(${endX-startX}px, 0, 0)`
   }
-  originX = 0
 }
 
 const handleTouchEnd = (event) => {
   if (event.target.parentNode.id === 'titlebar') {
-      // close slide if titlebar tapped
+    // close slide if titlebar tapped
     closeSlide(event);
   } else if (Math.abs(endX - startX) >= document.getElementById('gallery').clientWidth/6) {
     if ((endX - startX) > 0) {
@@ -184,7 +173,6 @@ const handleTouchEnd = (event) => {
   } else {
     // snap back into original place if swipe accidental
     tools.classList.toggle('showOverlay')
-    destinationX = 0
-    currentNode.style.transform = `translate3d(${-(destinationX-originX)}px, 0, 0)`
+    currentNode.style.transform = `translate3d(0, 0, 0)`
   }
 }
