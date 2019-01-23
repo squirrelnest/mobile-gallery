@@ -69,7 +69,7 @@ export const closeSlide = (event) => {
   currentNode.ontouchmove = null
   currentNode.ontouchend = null
   // change styles
-  scrim.classList.replace('fadeIn', 'fadeOut')
+  scrim.classList.remove('fadeIn')
   scrim.classList.remove('show')
   tools.classList.remove('show')
   tools.classList.remove('openOverlay')
