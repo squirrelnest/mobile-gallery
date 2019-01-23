@@ -1,13 +1,15 @@
-// STATE
-
-var currentNode = document.documentElement; // selected node
-var currentId; // id of selected node
-var startX = 0; // first x-coordinate of contact point
-var endX = 0; // final x-coordinate of contact point
+import {
+  titleText,
+  openSlide,
+  closeSlide,
+  handleTouchStart,
+  handleTouchMove,
+  handleTouchEnd
+} from './interactions.js'
 
 // IMAGE ASSETS - to be replaced with API
 
-const photos = [
+export const photos = [
     {id: 1, url: 'images/air.jpg', name: 'air'},
     {id: 2, url: 'images/desks.jpg', name: 'desks'},
     {id: 3, url: 'images/hive.jpg', name: 'hive'},
@@ -44,16 +46,6 @@ closeBtn.className = 'closeBtn'
 closeBtn.innerHTML = '&#10005;'
 closeBtn.onclick = (event) => { closeSlide(event); }
 
-const titleText = (text='default') => {
-  let photoTitle = document.createElement('DIV')
-  let h1 = document.createElement('H1')
-  let textNode = document.createTextNode(text)
-  h1.appendChild(textNode)
-  photoTitle.appendChild(h1)
-  photoTitle.id = 'titleText'
-  return photoTitle;
-}
-
 const titlebar = document.createElement('DIV')
 titlebar.id = 'titlebar'
 titlebar.className = 'tool titlebar'
@@ -87,92 +79,3 @@ photos.forEach(photo => {
   tile.onclick = (event) => { openSlide(event); }
   document.getElementById('gallery').appendChild(tile)
 })
-
-// INTERACTIONS
-
-const getNextImage = () => {
-  // deactivate current node
-  currentNode.classList.remove('openSlide')
-  currentNode.style.transform = null
-  currentNode.ontouchstart = null
-  currentNode.ontouchmove = null
-  currentNode.ontouchend = null
-  // activate new node
-  let next = document.getElementById(currentId)
-  next.classList.add('openSlide')
-  next.ontouchstart = (event) => { handleTouchStart(event) }
-  next.ontouchmove = (event) => { handleTouchMove(event) }
-  next.ontouchend = (event) => { handleTouchEnd(event) }
-  // set currentNode to next node
-  currentNode = next
-  updateTitle()
-}
-
-const updateTitle = () => {
-  selectedTitle = currentNode.title
-  let newTitle = titleText(selectedTitle)
-  document.getElementById('titlebar').replaceChild(newTitle, document.getElementById('titleText'))
-}
-
-const openSlide = (event) => {
-  currentId = event.target.id
-  currentNode = document.getElementById(currentId)
-  updateTitle()
-  currentNode.classList.add('openSlide')
-  tools.classList.add('showOverlay')
-  currentNode.ontouchstart = (event) => { handleTouchStart(event); }
-  currentNode.ontouchmove = (event) => { handleTouchMove(event); }
-  currentNode.ontouchend = (event) => { handleTouchEnd(event); }
-}
-
-const closeSlide = (event) => {
-  event.preventDefault()
-  event.stopPropagation()
-  tools.classList.remove('showOverlay')
-  currentNode.classList.remove('openSlide')
-  currentNode.ontouchstart = null
-  currentNode.ontouchmove = null
-  currentNode.ontouchend = null
-}
-
-// TOUCH EVENT HANDLERS
-
-const handleTouchStart = (event) => {
-  event.preventDefault()
-  startX = event.touches[0].clientX
-}
-
-const handleTouchMove = (event) => {
-  for (var i=0; i<event.touches.length; i++) {
-    endX = event.touches[i].clientX
-    currentNode.style.transform = `translate3d(${endX-startX}px, 0, 0)`
-  }
-}
-
-const handleTouchEnd = (event) => {
-  if (event.target.parentNode.id === 'titlebar') {
-    // close slide if titlebar tapped
-    closeSlide(event);
-  } else if (Math.abs(endX - startX) >= document.getElementById('gallery').clientWidth/6) {
-    if ((endX - startX) > 0) {
-      // if swipe right, go forward one image
-      if (currentId == photos.length) {
-        currentId = 1
-      } else {
-        currentId ++
-      }
-    } else if ((endX - startX) < 0) {
-      // if swipe left, go back one image
-      if (currentId == 1) {
-        currentId = photos.length
-      } else {
-        currentId --
-      }
-    }
-    getNextImage()
-  } else {
-    // snap back into original place if swipe accidental
-    tools.classList.toggle('showOverlay')
-    currentNode.style.transform = `translate3d(0, 0, 0)`
-  }
-}
