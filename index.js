@@ -33,20 +33,20 @@ const footerIcons = [
 
 const tools = document.getElementById('tools')
 tools.onclick = () => { tools.classList.toggle('showOverlay'); }
-// tools.ontouchstart = (event) => { handleTouchStart(event); }
-// tools.ontouchmove = (event) => { handleTouchMove(event); }
-// tools.ontouchend = (event) => { handleTouchEnd(event); }
+tools.ontouchstart = (event) => { handleTouchStart(event); }
+tools.ontouchmove = (event) => { handleTouchMove(event); }
+tools.ontouchend = (event) => { handleTouchEnd(event); }
 
 const backBtn = document.createElement('IMG')
 backBtn.src = 'icons/back.svg'
 backBtn.id = 'backBtn'
 backBtn.className = 'icon'
-backBtn.onclick = () => { closeSlide(event); }
+backBtn.onclick = (event) => { closeSlide(event); }
 
 const closeBtn = document.createElement('H1')
 closeBtn.className = 'closeBtn'
 closeBtn.innerHTML = '&#10005;'
-closeBtn.onclick = () => { closeSlide(event); }
+closeBtn.onclick = (event) => { closeSlide(event); }
 
 const titleText = (text='default') => {
   let photoTitle = document.createElement('DIV')
@@ -88,9 +88,8 @@ photos.forEach(photo => {
   tile.setAttribute('role', 'img')
   tile.setAttribute('aria-label', photo.name)
   tile.style.backgroundImage = 'url(' + photo.url + ')'
-  document.getElementById('gallery').appendChild(tile)
-  // handle click
   tile.onclick = (event) => { openSlide(event); }
+  document.getElementById('gallery').appendChild(tile)
 })
 
 // INTERACTIONS
@@ -132,6 +131,7 @@ const openSlide = (event) => {
 }
 
 const closeSlide = (event) => {
+  event.preventDefault()
   event.stopPropagation()
   tools.classList.remove('showOverlay')
   currentNode.classList.remove('openSlide')
@@ -161,8 +161,10 @@ const handleTouchMove = (event) => {
 }
 
 const handleTouchEnd = (event) => {
-  event.stopPropagation()
-  if (Math.abs(endX - startX) >= document.getElementById('gallery').clientWidth/6) {
+  if (event.target.parentNode.id === 'titlebar') {
+      // close slide if titlebar tapped
+    closeSlide(event);
+  } else if (Math.abs(endX - startX) >= document.getElementById('gallery').clientWidth/6) {
     if ((endX - startX) > 0) {
       // if swipe right, go forward one image
       if (currentId == photos.length) {
@@ -179,14 +181,10 @@ const handleTouchEnd = (event) => {
       }
     }
     getNextImage()
-  } else if (event.targetTouches.length === 0 || destinationX === 0) {
+  } else {
+    // snap back into original place if swipe accidental
     tools.classList.toggle('showOverlay')
     destinationX = 0
     currentNode.style.transform = `translate3d(${-(destinationX-originX)}px, 0, 0)`
-  } else {
-    // snap back into original place if swipe accidental
-    destinationX = 0
-    currentNode.style.transform = `translate3d(${-(destinationX-originX)}px, 0, 0)`
-    currentNode.style.position = 'absolute'
   }
 }
