@@ -1,4 +1,4 @@
-// GLOBALS
+// STATE
 
 var currentNode = document.documentElement;
 var currentId;
@@ -33,20 +33,21 @@ const footerIcons = [
 // OVERLAY
 
 const tools = document.getElementById('tools')
-tools.onclick = function (event) {
-  this.classList.remove('showOverlay');
-}
+tools.onclick = () => { tools.classList.toggle('showOverlay'); }
+// tools.ontouchstart = (event) => { handleTouchStart(event); }
+// tools.ontouchmove = (event) => { handleTouchMove(event); }
+// tools.ontouchend = (event) => { handleTouchEnd(event); }
 
 const backBtn = document.createElement('IMG')
 backBtn.src = 'icons/back.svg'
 backBtn.id = 'backBtn'
 backBtn.className = 'icon'
-backBtn.onclick = (event) => { closeSlide(); }
+backBtn.onclick = () => { closeSlide(event); }
 
 const closeBtn = document.createElement('H1')
 closeBtn.className = 'closeBtn'
 closeBtn.innerHTML = '&#10005;'
-closeBtn.onclick = (event) => { closeSlide(); }
+closeBtn.onclick = () => { closeSlide(event); }
 
 const titleText = (text='default') => {
   let photoTitle = document.createElement('DIV')
@@ -89,48 +90,58 @@ photos.forEach(photo => {
   tile.setAttribute('aria-label', photo.name)
   tile.style.backgroundImage = 'url(' + photo.url + ')'
   document.getElementById('gallery').appendChild(tile)
-  // handle clicks
-  tile.onclick = function (event) {
-    currentId = event.target.id;
-    selectedTitle = event.target.title
-    let newTitle = titleText(selectedTitle)
-    document.getElementById('titlebar').replaceChild(newTitle, document.getElementById('titleText'))
-    document.documentElement.style.overflow = 'hidden'
-    this.classList.add('openSlide')
-    tools.classList.add('showOverlay')
-    // handle swipe
-    this.ontouchstart = (event) => { handleTouchStart(event); }
-    this.ontouchmove = (event) => { handleTouchMove(event); }
-    this.ontouchend = (event) => { handleTouchEnd(event); }
-  }
+  // handle click
+  tile.onclick = (event) => { openSlide(event); }
 })
 
-// TASKS
+// INTERACTIONS
 
 getNextImage = () => {
+  // deactivate current node
   currentNode.classList.remove('openSlide')
   currentNode.style.transform = null
   currentNode.ontouchstart = null
   currentNode.ontouchmove = null
   currentNode.ontouchend = null
+  // activate new node
   let next = document.getElementById(currentId)
   next.classList.add('openSlide')
   next.ontouchstart = (event) => { handleTouchStart(event) }
   next.ontouchmove = (event) => { handleTouchMove(event) }
   next.ontouchend = (event) => { handleTouchEnd(event) }
+  // set currentNode to next node
+  currentNode = next
+  updateTitle()
 }
 
-closeSlide = () => {
-  event.preventDefault()
-  document.getElementsByClassName('openSlide')[0].classList.remove('openSlide')
-  document.documentElement.style.overflow = 'auto'
+updateTitle = () => {
+  selectedTitle = currentNode.title
+  let newTitle = titleText(selectedTitle)
+  document.getElementById('titlebar').replaceChild(newTitle, document.getElementById('titleText'))
+}
+
+openSlide = (event) => {
+  currentId = event.target.id
+  currentNode = document.getElementById(event.target.id)
+  updateTitle()
+  currentNode.classList.add('openSlide')
+  tools.classList.add('showOverlay')
+  // handle swipe
+  document.getElementById(currentId).ontouchstart = (event) => { handleTouchStart(event); }
+  document.getElementById(currentId).ontouchmove = (event) => { handleTouchMove(event); }
+  document.getElementById(currentId).ontouchend = (event) => { handleTouchEnd(event); }
+}
+
+closeSlide = (event) => {
+  event.stopPropagation()
+  tools.classList.remove('showOverlay')
   currentNode.classList.remove('openSlide')
   currentNode.ontouchstart = null
   currentNode.ontouchmove = null
   currentNode.ontouchend = null
 }
 
-// INTERACTIONS
+// EVENT HANDLERS
 
 handleTouchStart = (event) => {
   event.preventDefault()
@@ -171,7 +182,7 @@ handleTouchEnd = (event) => {
     }
     getNextImage()
   } else if (event.targetTouches.length === 0 || destinationX === 0) {
-    tools.classList.add('showOverlay')
+    tools.classList.toggle('showOverlay')
     destinationX = 0
     currentNode.style.transform = `translate3d(${-(destinationX-originX)}px, 0, 0)`
   } else {
