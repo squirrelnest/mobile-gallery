@@ -70,7 +70,7 @@ h5 {
   line-height: 1.5;
 }
 
-/* LAYOUT *******************/
+/* COMPONENTS *******************/
 
 .login {
   display: flex;
@@ -223,15 +223,19 @@ h5 {
 
 /* MEDIA QUERIES ***************/
 
-@media only screen and (max-width: 400px) {
-
-  .gallery {
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  }
+@media only screen and (max-width: 800px) { /* TABLET */
 
   .login {
     width: 100%;
     padding: 1rem;
+  }
+
+}
+
+@media only screen and (max-width: 400px) { /* MOBILE */
+
+  .gallery {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   }
 
 }
