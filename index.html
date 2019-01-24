@@ -13,9 +13,16 @@
     <link href="index.css" rel="stylesheet">
   </head>
   <body>
-    <header id="header" class="header">Images</header>
-    <div id="tools" class="tools"></div>
-    <div id="gallery" class="gallery"></div>
+    <div id="login" class="login show">
+      <input type="password" id="password" />
+      <!-- <input type="button" value="login"/> -->
+      <div id="loginBtn" class="loginBtn"><span>LOGIN</span></div>
+    </div>
+    <div id="protected" class="hide">
+      <header id="header" class="header">Images</header>
+      <div id="tools" class="tools"></div>
+      <div id="gallery" class="gallery"></div>
+    </div>
   </body>
   <script type="module" src="index.js" ></script>
   <script type="module" src="interactions.js"></script>

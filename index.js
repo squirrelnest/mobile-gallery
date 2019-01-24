@@ -1,4 +1,5 @@
 import {
+  login,
   titleText,
   openSlide,
   closeSlide,
@@ -26,6 +27,10 @@ const footerIcons = [
     {id: 'add', url: 'icons/add.svg', name: 'add'},
     {id: 'share', url: 'icons/share.svg', name: 'share'}
   ]
+
+// LOGIN
+
+document.getElementById('loginBtn').onclick = (event) => { login(event); }
 
 // OVERLAY
 

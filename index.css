@@ -24,6 +24,12 @@ p, span {
   margin: 0;
 }
 
+input {
+  font-size: 2rem;
+  text-align: center;
+  height: 3rem;
+}
+
 a {
   color: currentColor;
   cursor: pointer;
@@ -65,6 +71,23 @@ h5 {
 }
 
 /* LAYOUT *******************/
+
+.login {
+  display: flex;
+  flex-direction: column;
+  width: 33%;
+  height: 100%;
+  margin: auto;
+  justify-content: center;
+}
+
+.loginBtn {
+  width: 100%;
+  background-color: purple;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
 
 .header {
   display: block;
@@ -182,13 +205,20 @@ h5 {
   top: 0;
 }
 
-.show {
-  visibility: visible;
-}
-
 .openOverlay {
+  position: fixed;
+  top: 0;
   height: 100%;
   margin: 0;
+}
+
+.hide {
+  visibility: hidden;
+  display: none;
+}
+
+.show {
+  visibility: visible;
 }
 
 /* MEDIA QUERIES ***************/
@@ -197,6 +227,11 @@ h5 {
 
   .gallery {
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+
+  .login {
+    width: 100%;
+    padding: 1rem;
   }
 
 }

@@ -44,7 +44,6 @@ export const getNextImage = () => {
 }
 
 export const updateTitle = () => {
-  console.log(currentNode.title)
   let selectedTitle = currentNode.title
   let newTitle = titleText(selectedTitle)
   document.getElementById('titlebar').replaceChild(newTitle, document.getElementById('titleText'))
@@ -115,5 +114,18 @@ export const handleTouchEnd = (event) => {
     tools.classList.toggle('show')
     tools.classList.toggle('openOverlay')
     currentNode.style.transform = `translate3d(0, 0, 0)`
+  }
+}
+
+export const login = (event) => {
+  event.preventDefault()
+  // not very secure w/o hashing but keeps out crawlers and riff raff
+  var raw_password = document.getElementById('password').value
+  if (raw_password === 'hordor') {
+    document.getElementById('login').remove()
+    document.getElementById('protected').classList.replace('hide', 'show')
+  } else {
+    alert('Wrong password')
+    document.getElementById('password').value = ''
   }
 }
