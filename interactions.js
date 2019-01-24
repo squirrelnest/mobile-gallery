@@ -46,7 +46,7 @@ export const getNextImage = () => {
 export const updateTitle = () => {
   let selectedTitle = currentNode.title
   let newTitle = titleText(selectedTitle)
-  document.getElementById('titlebar').replaceChild(newTitle, document.getElementById('titleText'))
+  titlebar.replaceChild(newTitle, document.getElementById('titleText'))
 }
 
 export const titleText = (text='default') => {
