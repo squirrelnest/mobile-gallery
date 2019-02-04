@@ -95,8 +95,12 @@ h5 {
   width: 100%;
   text-align: center;
   background-color: rgb(245, 245, 245);
-  border-bottom: 2px solid rgb(227, 227, 227);
-  padding: 1rem;
+  border-bottom: 1px solid rgb(227, 227, 227);
+  color: rgb(74, 74, 74);
+  font-family: 'Helvetica', sans-serif;
+  font-weight: 500;
+  font-size: 1.2rem;
+  padding: 1.4rem;
   z-index: 2;
 }
 
@@ -104,12 +108,11 @@ h5 {
   height: 100%;
   width: 100%;
   overflow: auto;
-  position: relative;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   grid-auto-rows: 120px;
-  grid-gap: 1rem;
-  padding: 4.4rem 1rem 1rem;
+  grid-gap: 0.5rem;
+  padding: 5.4rem 1rem 1rem;
 }
 
 .scrim {
@@ -183,6 +186,12 @@ h5 {
   100% {opacity: 0; visibility: hidden;}
 }
 
+@keyframes shrink {
+  0%   {width: 100%; visibility: visible;}
+  99% {width: 0%; visibility: visible;}
+  100% {visibility: hidden;}
+}
+
 .fadeOut {
   animation: fade .3s ease 1;
   animation-direction: forwards;
@@ -206,6 +215,11 @@ h5 {
   position: fixed;
   top: 0;
   left: 0;
+}
+
+.closeSlide {
+  animation-name: shrink;
+  animation-duration: .4s;
 }
 
 .openOverlay {

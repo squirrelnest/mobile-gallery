@@ -1,6 +1,5 @@
 import {
   login,
-  titleText,
   openSlide,
   closeSlide,
   handleTouchStart,

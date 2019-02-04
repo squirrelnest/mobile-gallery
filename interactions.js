@@ -6,6 +6,8 @@ export var currentNode = document.documentElement; // selected node
 export var currentId; // id of selected node
 export var startX = 0; // first x-coordinate of contact point
 export var endX = 0; // final x-coordinate of contact point
+export var startY = 0; // first x-coordinate of contact point
+export var endY = 0; // final x-coordinate of contact point
 
 // INTERACTIONS
 
@@ -44,12 +46,14 @@ export const getNextImage = () => {
 }
 
 export const updateTitle = () => {
+  // re-render titleText element
   let selectedTitle = currentNode.title
   let newTitle = titleText(selectedTitle)
   titlebar.replaceChild(newTitle, document.getElementById('titleText'))
 }
 
 export const titleText = (text='default') => {
+  // create new titleText element
   let photoTitle = document.createElement('DIV')
   let h1 = document.createElement('H1')
   let textNode = document.createTextNode(text)
@@ -63,6 +67,7 @@ export const closeSlide = (event) => {
   event.preventDefault()
   event.stopPropagation()
   // detach event handlers
+  // currentNode.classList.remove('openSlide')
   currentNode.classList.remove('openSlide')
   currentNode.ontouchstart = null
   currentNode.ontouchmove = null
@@ -79,12 +84,14 @@ export const closeSlide = (event) => {
 export const handleTouchStart = (event) => {
   event.preventDefault()
   startX = event.touches[0].clientX
+  startY = event.touches[0].clientY
 }
 
 export const handleTouchMove = (event) => {
   for (var i=0; i<event.touches.length; i++) {
     endX = event.touches[i].clientX
-    currentNode.style.transform = `translate3d(${endX-startX}px, 0, 0)`
+    endY = event.touches[i].clientY
+    currentNode.style.transform = `translate3d(${endX-startX}px, ${endY-startY}px, 0)`
   }
 }
 
@@ -92,16 +99,16 @@ export const handleTouchEnd = (event) => {
   if (event.target.parentNode.id === 'titlebar') {
     // close slide if titlebar tapped
     closeSlide(event);
-  } else if (Math.abs(endX - startX) >= document.getElementById('gallery').clientWidth/6) {
-    if ((endX - startX) > 0) {
-      // if swipe right, go forward one image
+  } else if (
+      Math.abs(endX - startX) >= document.getElementById('gallery').clientWidth/6 ||
+      Math.abs(endY - startY) >= document.getElementById('gallery').clientHeight/6) {
+    if ((endX - startX) > 0 || (endY - startY) > 0) { // if swipe right or up, go forward one image
       if (currentId == photos.length) {
         currentId = 1
       } else {
         currentId ++
       }
-    } else if ((endX - startX) < 0) {
-      // if swipe left, go back one image
+    } else if ((endX - startX) < 0 || (endY - startY) < 0) { // if swipe left or down, go back one image
       if (currentId == 1) {
         currentId = photos.length
       } else {
@@ -109,8 +116,7 @@ export const handleTouchEnd = (event) => {
       }
     }
     getNextImage()
-  } else {
-    // snap back into original place if swipe accidental
+  } else { // snap back into original place if swipe accidental
     tools.classList.toggle('show')
     tools.classList.toggle('openOverlay')
     currentNode.style.transform = `translate3d(0, 0, 0)`
