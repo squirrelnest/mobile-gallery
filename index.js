@@ -32,7 +32,7 @@ const scrim = document.getElementById('scrim')
 // ATTACH EVENT LISTENERS AND HANDLERS
 
 loginBtn.onclick = (event) => { login(event); }
-tools.onclick = () => { tools.classList.toggle('show'); }
+tools.onclick = () => { tools.classList.toggle('show') }
 tools.ontouchstart = (event) => { handleTouchStart(event); }
 tools.ontouchmove = (event) => { handleTouchMove(event); }
 tools.ontouchend = (event) => { handleTouchEnd(event); }
@@ -42,14 +42,22 @@ closeBtn.onclick = (event) => { closeSlide(event); }
 // CREATE GALLERY
 
 photos.forEach(photo => {
+  // create image element
+  let image = document.createElement('IMG')
+  image.id = photo.id
+  image.title = photo.name
+  image.setAttribute('role', 'img')
+  image.setAttribute('aria-label', photo.name)
+  // image.style.backgroundImage = 'url(' + photo.url + ')'
+  image.src = photo.url
+  image.className = 'tile-image'
+  image.onclick = (event) => { openSlide(event); }
   // create tile to contain image
   let tile = document.createElement('DIV')
+  tile.className = 'tile'
   tile.id = photo.id
   tile.title = photo.name
-  tile.className = 'tile'
-  tile.setAttribute('role', 'img')
-  tile.setAttribute('aria-label', photo.name)
-  tile.style.backgroundImage = 'url(' + photo.url + ')'
-  tile.onclick = (event) => { openSlide(event); }
+  tile.appendChild(image)
+  // add tile to gallery
   document.getElementById('gallery').appendChild(tile)
 })

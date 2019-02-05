@@ -12,10 +12,12 @@ export var endY = 0; // final x-coordinate of contact point
 // INTERACTIONS
 
 export const openSlide = (event) => {
+  console.log(event.target)
   currentId = event.target.id
   currentNode = document.getElementById(currentId)
   updateTitle()
   // change styles
+  // currentNode.classList.add('openSlide')
   currentNode.classList.add('openSlide')
   tools.classList.add('show')
   tools.classList.add('openOverlay')
@@ -67,7 +69,6 @@ export const closeSlide = (event) => {
   event.preventDefault()
   event.stopPropagation()
   // detach event handlers
-  // currentNode.classList.remove('openSlide')
   currentNode.classList.remove('openSlide')
   currentNode.ontouchstart = null
   currentNode.ontouchmove = null
@@ -91,12 +92,18 @@ export const handleTouchMove = (event) => {
   for (var i=0; i<event.touches.length; i++) {
     endX = event.touches[i].clientX
     endY = event.touches[i].clientY
-    currentNode.style.transform = `translate3d(${endX-startX}px, ${endY-startY}px, 0)`
+    if (Math.abs(endX-startX) > Math.abs(endY-startY)) { 
+      // move tile horizontally if touch moved more horizontally than vertically
+      currentNode.style.transform = `translate3d(${endX-startX}px, 0, 0)`
+    } else if (Math.abs(endX-startX) < Math.abs(endY-startY)) {
+      // move tile vertically if touch moved more vertically than horizontally
+      currentNode.style.transform = `translate3d(0, ${endY-startY}px, 0)`
+    } 
   }
 }
 
 export const handleTouchEnd = (event) => {
-  if (event.target.parentNode.id === 'titlebar') {
+  if (event.target.id === 'titlebar') {
     // close slide if titlebar tapped
     closeSlide(event);
   } else if (
@@ -116,7 +123,7 @@ export const handleTouchEnd = (event) => {
       }
     }
     getNextImage()
-  } else { // snap back into original place if swipe accidental
+  } else { // snap back to origin if swipe accidental
     tools.classList.toggle('show')
     tools.classList.toggle('openOverlay')
     currentNode.style.transform = `translate3d(0, 0, 0)`

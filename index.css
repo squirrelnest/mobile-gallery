@@ -9,7 +9,7 @@ html, body {
   width: 100%;
   margin: 0;
   padding: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Helvetica', sans-serif;
   background-color: #F7F7F7;
   color: #222;
   font-size: 16px; /* FF does not let you override its minimum font-size */
@@ -30,16 +30,6 @@ input {
   height: 3rem;
 }
 
-a {
-  color: currentColor;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-a:hover, Link:hover, .link:hover {
-  color: #fc9414;
-}
-
 h1, h2, h3, h4, h5, h6 {
   font-weight: 100;
   margin: 0;
@@ -48,6 +38,7 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
   font-size: 1.2rem;
+  font-weight: 500;
 }
 
 h2 {
@@ -97,10 +88,9 @@ h5 {
   background-color: rgb(245, 245, 245);
   border-bottom: 1px solid rgb(227, 227, 227);
   color: rgb(74, 74, 74);
-  font-family: 'Helvetica', sans-serif;
   font-weight: 500;
   font-size: 1.2rem;
-  padding: 1.4rem;
+  padding: 1.3rem;
   z-index: 2;
 }
 
@@ -112,7 +102,7 @@ h5 {
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   grid-auto-rows: 120px;
   grid-gap: 0.5rem;
-  padding: 5.4rem 1rem 1rem;
+  padding: 5.2rem 1rem 1rem;
 }
 
 .scrim {
@@ -133,7 +123,18 @@ h5 {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.tile-image {
+  display: block;
+  background-color: rgba(0,0,0,0);
+  /* background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center; */
+  width: 100%;
+  /* height: 100%; */
 }
 
 .tools {
@@ -208,13 +209,19 @@ h5 {
   animation-duration: .4s;
   animation-timing-function: ease;
   animation-fill-mode: forwards;
-  background-size: contain;
+  /* background-size: contain; */
+  flex-direction: column;
   width: 100%;
-  height: 100%;
+
   z-index: 3;
   position: fixed;
+
+  display: flex;
+  justify-content: space-around;
   top: 0;
   left: 0;
+ 
+  position: absolute;
 }
 
 .closeSlide {
@@ -249,10 +256,30 @@ h5 {
 
 }
 
-@media only screen and (max-width: 400px) { /* MOBILE */
+@media only screen and (max-width: 400px) { /* MOBILE - PORTRAIT */
 
   .gallery {
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   }
 
 }
+
+@media only screen and (max-width: 600px)  and (orientation: landscape) { /* MOBILE - LANDSCAPE */
+
+  .openSlide {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    flex-direction: row;
+  }
+  
+  .openSlide .tile-image {
+    position: fixed;
+    top: 0;
+    width: auto;
+    height: 100%;
+  }
+
+}
+
+
