@@ -39,25 +39,48 @@ tools.ontouchend = (event) => { handleTouchEnd(event); }
 backBtn.onclick = (event) => { closeSlide(event); }
 closeBtn.onclick = (event) => { closeSlide(event); }
 
-// CREATE GALLERY
+// CREATE GALLERY GRID VIEW
 
 photos.forEach(photo => {
   // create image element
-  let image = document.createElement('IMG')
+  let image = document.createElement('DIV')
   image.id = photo.id
   image.title = photo.name
   image.setAttribute('role', 'img')
   image.setAttribute('aria-label', photo.name)
-  // image.style.backgroundImage = 'url(' + photo.url + ')'
-  image.src = photo.url
+  // image.src = photo.url
+  image.style.backgroundImage = 'url(' + photo.url + ')'
   image.className = 'tile-image'
   image.onclick = (event) => { openSlide(event); }
   // create tile to contain image
   let tile = document.createElement('DIV')
   tile.className = 'tile'
-  tile.id = photo.id
+  tile.id = `tile_${photo.id}`
   tile.title = photo.name
   tile.appendChild(image)
   // add tile to gallery
   document.getElementById('gallery').appendChild(tile)
+})
+
+// CREATE GALLERY DETAIL VIEW
+
+photos.forEach(photo => {
+  // create image element
+  let image = document.createElement('DIV')
+  image.id = photo.id
+  image.title = photo.name
+  image.setAttribute('role', 'img')
+  image.setAttribute('aria-label', photo.name)
+  // image.src = photo.url
+  image.style.backgroundImage = 'url(' + photo.url + ')'
+  image.className = 'detail-image'
+  image.onclick = (event) => { openSlide(event); }
+  // create tile to contain image
+  let stage = document.createElement('DIV')
+  stage.className = 'stage'
+  stage.id = photo.id
+  stage.title = photo.name
+  stage.appendChild(image)
+  // add stage to gallery
+  document.getElementById('detail').appendChild(stage)
 })

@@ -12,12 +12,13 @@ export var endY = 0; // final x-coordinate of contact point
 // INTERACTIONS
 
 export const openSlide = (event) => {
-  console.log(event.target)
-  currentId = event.target.id
+  // currentId = event.target.id
+  let pattern = /\d/
+  currentId = pattern.exec(event.target.id)[0]
   currentNode = document.getElementById(currentId)
+  document.getElementById('detail').style.display = 'block'
   updateTitle()
   // change styles
-  // currentNode.classList.add('openSlide')
   currentNode.classList.add('openSlide')
   tools.classList.add('show')
   tools.classList.add('openOverlay')
@@ -78,6 +79,7 @@ export const closeSlide = (event) => {
   scrim.classList.remove('show')
   tools.classList.remove('show')
   tools.classList.remove('openOverlay')
+  document.getElementById('detail').style.display = 'none'
 }
 
 // TOUCH EVENT HANDLERS
@@ -103,19 +105,19 @@ export const handleTouchMove = (event) => {
 }
 
 export const handleTouchEnd = (event) => {
-  if (event.target.id === 'titlebar') {
+  if (event.target.id === 'titlebar' || event.target.parentNode.id === 'titlebar') {
     // close slide if titlebar tapped
     closeSlide(event);
   } else if (
-      Math.abs(endX - startX) >= document.getElementById('gallery').clientWidth/6 ||
-      Math.abs(endY - startY) >= document.getElementById('gallery').clientHeight/6) {
-    if ((endX - startX) > 0 || (endY - startY) > 0) { // if swipe right or up, go forward one image
+    Math.abs(endX - startX) >= document.getElementById('gallery').clientWidth/6 ||
+    Math.abs(endY - startY) >= document.getElementById('gallery').clientHeight/6) {
+    if ((endX - startX) > 0 || (endY - startY) < 0) { // if swipe right or up, go forward one image
       if (currentId == photos.length) {
         currentId = 1
       } else {
         currentId ++
       }
-    } else if ((endX - startX) < 0 || (endY - startY) < 0) { // if swipe left or down, go back one image
+    } else if ((endX - startX) < 0 || (endY - startY) > 0) { // if swipe left or down, go back one image
       if (currentId == 1) {
         currentId = photos.length
       } else {

@@ -120,9 +120,6 @@ h5 {
 .tile {
   display: block;
   background-color: rgba(0,0,0,0);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
   width: 100%;
   height: 100%;
 }
@@ -130,11 +127,25 @@ h5 {
 .tile-image {
   display: block;
   background-color: rgba(0,0,0,0);
-  /* background-size: cover;
+  background-size: cover;
   background-repeat: no-repeat;
-  background-position: center; */
+  background-position: center;
   width: 100%;
-  /* height: 100%; */
+  height: 100%;
+}
+
+.detail {
+  display: none;
+}
+
+.detail-image {
+  display: block;
+  background-color: rgba(0,0,0,0);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  height: 100%;
 }
 
 .tools {
@@ -209,18 +220,14 @@ h5 {
   animation-duration: .4s;
   animation-timing-function: ease;
   animation-fill-mode: forwards;
-  /* background-size: contain; */
   flex-direction: column;
   width: 100%;
-
+  height: 100%;
   z-index: 3;
-  position: fixed;
-
   display: flex;
   justify-content: space-around;
   top: 0;
   left: 0;
- 
   position: absolute;
 }
 
