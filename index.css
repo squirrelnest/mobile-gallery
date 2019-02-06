@@ -128,11 +128,11 @@ h5 {
   height: 100%;
 }
 
-.slideshow {
+.slideshow {  
   display: none;
 }
 
-.slide {
+.slide {  
   flex-direction: column;
   width: 100%;
   height: 100%;
@@ -152,11 +152,10 @@ h5 {
   background-position: center;
   width: 100%;
   height: 100%;
-  transition: transform 1s;
-}
-
-.scaleSlide {
-  transition: transform 1s; 
+  /* animation-name: bubble;
+  animation-duration: 0.4s;
+  animation-timing-function: ease;
+  animation-fill-mode: forwards; */
 }
 
 .tools {
@@ -199,9 +198,9 @@ h5 {
 /* TRANSITIONS ****************/
 
 @keyframes bubble {
-  0%   {background-size: 0%;}
-  50%  {background-size: 120%;}
-  100% {background-size: 100%;}
+  0%   {transform: scale(0);}
+  50%  {transform: scale(1.2);}
+  100% {transform: scale(1);}
 }
 
 @keyframes fade {
@@ -216,8 +215,7 @@ h5 {
 }
 
 .fadeOut {
-  animation: fade .3s ease 1;
-  animation-direction: forwards;
+  animation: fade .3s ease 1 forwards;
   animation-fill-mode: forwards;
 }
 
@@ -226,19 +224,22 @@ h5 {
   animation-fill-mode: forwards;
 }
 
-.openSlide {
+.bubbleUp {
   animation-name: bubble;
-  animation-duration: .4s;
+  animation-duration: 0.4s;
   animation-timing-function: ease;
   animation-fill-mode: forwards;
-  z-index: 3;
-  opacity: 1;
-  transition: opacity 1s ease; 
 }
 
 .closeSlide {
   animation-name: shrink;
   animation-duration: .4s;
+}
+
+.openSlide {
+  z-index: 3;
+  opacity: 1;
+  transition: opacity 0.6s ease; 
 }
 
 .openOverlay {

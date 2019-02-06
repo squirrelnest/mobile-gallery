@@ -28,6 +28,7 @@ export const openSlideShow = (event) => {
 export const openSlide = () => {
   // change styles
   currentNode.classList.add('openSlide')
+  currentNode.firstChild.classList.add('bubbleUp')
   // attach event handlers
   currentNode.ontouchstart = (event) => { handleTouchStart(event); }
   currentNode.ontouchmove = (event) => { handleTouchMove(event); }
@@ -73,6 +74,7 @@ export const closeSlide = () => {
   // change styles
   currentNode.classList.remove('openSlide')
   currentNode.removeAttribute('style')
+  currentNode.firstChild.classList.remove('bubbleUp')
   // remove event handlers
   currentNode.ontouchstart = null
   currentNode.ontouchmove = null
