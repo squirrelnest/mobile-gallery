@@ -28,7 +28,7 @@ const backBtn = document.getElementById('backBtn')
 const closeBtn = document.getElementById('closeBtn')
 const titlebar = document.getElementById('titlebar')
 const scrim = document.getElementById('scrim')
-const detail = document.getElementById('detail')
+const slideshow = document.getElementById('slideshow')
 
 // ATTACH EVENT LISTENERS AND HANDLERS
 
@@ -40,7 +40,7 @@ tools.ontouchend = (event) => { handleTouchEnd(event); }
 backBtn.onclick = (event) => { closeSlide(event); }
 closeBtn.onclick = (event) => { closeSlide(event); }
 
-// CREATE GRID VIEW
+// CREATE GRID VIEW - 'GALLERY'
 
 photos.forEach(photo => {
   // create thumbnail
@@ -54,7 +54,7 @@ photos.forEach(photo => {
   document.getElementById('gallery').appendChild(thumbnail)
 })
 
-// CREATE DETAIL VIEW
+// CREATE DETAIL VIEW - 'SLIDESHOW'
 
 photos.forEach(photo => {
   // create image element
@@ -63,16 +63,15 @@ photos.forEach(photo => {
   image.title = photo.name
   image.setAttribute('role', 'img')
   image.setAttribute('aria-label', photo.name)
-  // image.src = photo.url
   image.style.backgroundImage = 'url(' + photo.url + ')'
-  image.className = 'detail-image'
+  image.className = 'image'
   image.onclick = (event) => { openSlide(event); }
-  // create container for image
-  let stage = document.createElement('DIV')
-  stage.className = 'stage'
-  stage.id = photo.id
-  stage.title = photo.name
-  stage.appendChild(image)
-  // add stage to gallery
-  document.getElementById('detail').appendChild(stage)
+  // create slide for image
+  let slide = document.createElement('DIV')
+  slide.className = 'slide'
+  slide.id = photo.id
+  slide.title = photo.name
+  slide.appendChild(image)
+  // add slide to gallery
+  document.getElementById('slideshow').appendChild(slide)
 })

@@ -14,13 +14,13 @@ export var offsetY = 0; // difference between startY and endY
 // INTERACTIONS
 
 export const openSlide = (event) => {
-  // retrieve photo details
+  // retrieve slide details
   let pattern = /\d/
   currentId = pattern.exec(event.target.id)[0]
   currentNode = document.getElementById(currentId)
   updateTitle()
   // change styles
-  detail.classList.add('show')
+  slideshow.classList.add('show')
   currentNode.classList.add('openSlide')
   tools.classList.add('show')
   tools.classList.add('openOverlay')
@@ -35,7 +35,7 @@ export const openSlide = (event) => {
 export const getNextImage = () => {
   // deactivate current node
   currentNode.classList.remove('openSlide')
-  currentNode.style.transform = null
+  currentNode.removeAttribute('style')
   currentNode.ontouchstart = null
   currentNode.ontouchmove = null
   currentNode.ontouchend = null
@@ -73,6 +73,7 @@ export const closeSlide = (event) => {
   event.stopPropagation()
   // detach event handlers
   currentNode.classList.remove('openSlide')
+  currentNode.removeAttribute('style')
   currentNode.ontouchstart = null
   currentNode.ontouchmove = null
   currentNode.ontouchend = null
@@ -81,7 +82,7 @@ export const closeSlide = (event) => {
   scrim.classList.remove('show')
   tools.classList.remove('show')
   tools.classList.remove('openOverlay')
-  detail.classList.remove('show')
+  slideshow.classList.remove('show')
 }
 
 // TOUCH EVENT HANDLERS

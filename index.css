@@ -128,15 +128,15 @@ h5 {
   height: 100%;
 }
 
-.detail {
+.slideshow {
   display: none;
 }
 
-.stage {
+.slide {
   opacity: 0;
 }
 
-.detail-image {
+.image {
   display: block;
   background-color: rgba(0,0,0,0);
   background-size: contain;
