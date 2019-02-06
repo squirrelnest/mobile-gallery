@@ -6,19 +6,21 @@ export var currentNode = document.documentElement; // selected node
 export var currentId; // id of selected node
 export var startX = 0; // first x-coordinate of contact point
 export var endX = 0; // final x-coordinate of contact point
+export var offsetX = 0; // difference between startX and endX
 export var startY = 0; // first x-coordinate of contact point
 export var endY = 0; // final x-coordinate of contact point
+export var offsetY = 0; // difference between startY and endY
 
 // INTERACTIONS
 
 export const openSlide = (event) => {
-  // currentId = event.target.id
+  // retrieve photo details
   let pattern = /\d/
   currentId = pattern.exec(event.target.id)[0]
   currentNode = document.getElementById(currentId)
-  document.getElementById('detail').style.display = 'block'
   updateTitle()
   // change styles
+  detail.classList.add('show')
   currentNode.classList.add('openSlide')
   tools.classList.add('show')
   tools.classList.add('openOverlay')
@@ -49,14 +51,14 @@ export const getNextImage = () => {
 }
 
 export const updateTitle = () => {
-  // re-render titleText element
+  // re-render title
   let selectedTitle = currentNode.title
   let newTitle = titleText(selectedTitle)
   titlebar.replaceChild(newTitle, document.getElementById('titleText'))
 }
 
 export const titleText = (text='default') => {
-  // create new titleText element
+  // create new title
   let photoTitle = document.createElement('DIV')
   let h1 = document.createElement('H1')
   let textNode = document.createTextNode(text)
@@ -79,7 +81,7 @@ export const closeSlide = (event) => {
   scrim.classList.remove('show')
   tools.classList.remove('show')
   tools.classList.remove('openOverlay')
-  document.getElementById('detail').style.display = 'none'
+  detail.classList.remove('show')
 }
 
 // TOUCH EVENT HANDLERS
@@ -94,12 +96,14 @@ export const handleTouchMove = (event) => {
   for (var i=0; i<event.touches.length; i++) {
     endX = event.touches[i].clientX
     endY = event.touches[i].clientY
-    if (Math.abs(endX-startX) > Math.abs(endY-startY)) { 
+    offsetX = endX-startX
+    offsetY = endY-startY
+    if (Math.abs(offsetX) > Math.abs(offsetY)) { 
       // move tile horizontally if touch moved more horizontally than vertically
-      currentNode.style.transform = `translate3d(${endX-startX}px, 0, 0)`
-    } else if (Math.abs(endX-startX) < Math.abs(endY-startY)) {
+      currentNode.style.transform = `translate3d(${offsetX}px, 0, 0)`
+    } else if (Math.abs(offsetX) < Math.abs(offsetY)) {
       // move tile vertically if touch moved more vertically than horizontally
-      currentNode.style.transform = `translate3d(0, ${endY-startY}px, 0)`
+      currentNode.style.transform = `translate3d(0, ${offsetY}px, 0)`
     } 
   }
 }
@@ -109,15 +113,15 @@ export const handleTouchEnd = (event) => {
     // close slide if titlebar tapped
     closeSlide(event);
   } else if (
-    Math.abs(endX - startX) >= document.getElementById('gallery').clientWidth/6 ||
-    Math.abs(endY - startY) >= document.getElementById('gallery').clientHeight/6) {
-    if ((endX - startX) > 0 || (endY - startY) < 0) { // if swipe right or up, go forward one image
+    Math.abs(offsetX) >= document.getElementById('gallery').clientWidth/6 ||
+    Math.abs(offsetY) >= document.getElementById('gallery').clientHeight/6) {
+    if ((offsetX) > 0 || (offsetY) < 0) { // if swipe right or up, go forward one image
       if (currentId == photos.length) {
         currentId = 1
       } else {
         currentId ++
       }
-    } else if ((endX - startX) < 0 || (endY - startY) > 0) { // if swipe left or down, go back one image
+    } else if ((offsetX) < 0 || (offsetY) > 0) { // if swipe left or down, go back one image
       if (currentId == 1) {
         currentId = photos.length
       } else {

@@ -28,6 +28,7 @@ const backBtn = document.getElementById('backBtn')
 const closeBtn = document.getElementById('closeBtn')
 const titlebar = document.getElementById('titlebar')
 const scrim = document.getElementById('scrim')
+const detail = document.getElementById('detail')
 
 // ATTACH EVENT LISTENERS AND HANDLERS
 
@@ -39,30 +40,21 @@ tools.ontouchend = (event) => { handleTouchEnd(event); }
 backBtn.onclick = (event) => { closeSlide(event); }
 closeBtn.onclick = (event) => { closeSlide(event); }
 
-// CREATE GALLERY GRID VIEW
+// CREATE GRID VIEW
 
 photos.forEach(photo => {
-  // create image element
-  let image = document.createElement('DIV')
-  image.id = photo.id
-  image.title = photo.name
-  image.setAttribute('role', 'img')
-  image.setAttribute('aria-label', photo.name)
-  // image.src = photo.url
-  image.style.backgroundImage = 'url(' + photo.url + ')'
-  image.className = 'tile-image'
-  image.onclick = (event) => { openSlide(event); }
-  // create tile to contain image
-  let tile = document.createElement('DIV')
-  tile.className = 'tile'
-  tile.id = `tile_${photo.id}`
-  tile.title = photo.name
-  tile.appendChild(image)
-  // add tile to gallery
-  document.getElementById('gallery').appendChild(tile)
+  // create thumbnail
+  let thumbnail = document.createElement('DIV')
+  thumbnail.className = 'thumbnail'
+  thumbnail.id = `thumbnail_${photo.id}`
+  thumbnail.title = photo.name
+  thumbnail.style.backgroundImage = 'url(' + photo.url + ')'
+  thumbnail.onclick = (event) => { openSlide(event); }
+  // add thumbnail to gallery
+  document.getElementById('gallery').appendChild(thumbnail)
 })
 
-// CREATE GALLERY DETAIL VIEW
+// CREATE DETAIL VIEW
 
 photos.forEach(photo => {
   // create image element
@@ -75,7 +67,7 @@ photos.forEach(photo => {
   image.style.backgroundImage = 'url(' + photo.url + ')'
   image.className = 'detail-image'
   image.onclick = (event) => { openSlide(event); }
-  // create tile to contain image
+  // create container for image
   let stage = document.createElement('DIV')
   stage.className = 'stage'
   stage.id = photo.id
