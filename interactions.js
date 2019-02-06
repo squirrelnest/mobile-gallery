@@ -115,13 +115,17 @@ export const handleTouchEnd = (event) => {
   } else if (
     Math.abs(offsetX) >= document.getElementById('gallery').clientWidth/6 ||
     Math.abs(offsetY) >= document.getElementById('gallery').clientHeight/6) {
-    if ((offsetX) > 0 || (offsetY) < 0) { // if swipe right or up, go forward one image
+    if ( 
+      (Math.abs(offsetX) > Math.abs(offsetY) && (offsetX) < 0) || 
+      (Math.abs(offsetX) < Math.abs(offsetY) && (offsetY) < 0) ){ // if swipe left or up, go forward one image
       if (currentId == photos.length) {
         currentId = 1
       } else {
         currentId ++
       }
-    } else if ((offsetX) < 0 || (offsetY) > 0) { // if swipe left or down, go back one image
+    } else if (
+      (Math.abs(offsetX) > Math.abs(offsetY) && (offsetX) > 0) || 
+      (Math.abs(offsetX) < Math.abs(offsetY) && (offsetY) > 0) ) { // if swipe right or down, go back one image
       if (currentId == 1) {
         currentId = photos.length
       } else {
