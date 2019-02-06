@@ -36,10 +36,8 @@ export const openSlide = () => {
 }
 
 export const openOverlay = () => {
-  tools.classList.add('show')
-  tools.classList.add('openOverlay')
-  scrim.classList.add('show')
-  scrim.classList.add('fadeIn')
+  tools.classList.add('show', 'openOverlay')
+  scrim.classList.add('show', 'fadeIn')
 }
 
 export const getNextImage = () => {
@@ -68,15 +66,13 @@ export const closeSlide = () => {
 }
 
 export const closeSlideShow = (event) => {
-  event.preventDefault()
   event.stopPropagation()
+  event.preventDefault()
   // close current slide
   closeSlide()
   // close overlays and scrims
-  scrim.classList.remove('fadeIn')
-  scrim.classList.remove('show')
-  tools.classList.remove('show')
-  tools.classList.remove('openOverlay')
+  scrim.classList.remove('fadeIn', 'show')
+  tools.classList.remove('openOverlay', 'show')
   //close slideshow
   slideshow.classList.remove('show')
 }
@@ -111,7 +107,7 @@ export const handleTouchEnd = (event) => {
     closeSlideShow(event);
   } else if (
     Math.abs(offsetX) >= document.getElementById('gallery').clientWidth/6 ||
-    Math.abs(offsetY) >= document.getElementById('gallery').clientHeight/6) {
+    Math.abs(offsetY) >= document.getElementById('gallery').clientHeight/6 ){
     if ( 
       (Math.abs(offsetX) > Math.abs(offsetY) && (offsetX) < 0) || 
       (Math.abs(offsetX) < Math.abs(offsetY) && (offsetY) < 0) ){ // if swipe left or up, go forward one image
@@ -122,7 +118,7 @@ export const handleTouchEnd = (event) => {
       }
     } else if (
       (Math.abs(offsetX) > Math.abs(offsetY) && (offsetX) > 0) || 
-      (Math.abs(offsetX) < Math.abs(offsetY) && (offsetY) > 0) ) { // if swipe right or down, go back one image
+      (Math.abs(offsetX) < Math.abs(offsetY) && (offsetY) > 0) ){ // if swipe right or down, go back one image
       if (currentId == 1) {
         currentId = photos.length
       } else {

@@ -25,6 +25,7 @@ export const photos = [
 // ESTABLISH REFERENCES
 
 const loginBtn = document.getElementById('loginBtn')
+const titlebar = document.getElementById('titlebar')
 const tools = document.getElementById('tools')
 const backBtn = document.getElementById('backBtn')
 const closeBtn = document.getElementById('closeBtn')
@@ -34,17 +35,16 @@ const slideshow = document.getElementById('slideshow')
 // ATTACH EVENT LISTENERS AND HANDLERS
 
 loginBtn.onclick = (event) => { login(event); }
-tools.onclick = () => { tools.classList.toggle('show') }
+tools.onclick = () => { tools.classList.toggle('show'); }
 tools.ontouchstart = (event) => { handleTouchStart(event); }
 tools.ontouchmove = (event) => { handleTouchMove(event); }
 tools.ontouchend = (event) => { handleTouchEnd(event); }
-backBtn.onclick = (event) => { closeSlide(event); }
-closeBtn.onclick = (event) => { closeSlide(event); }
+backBtn.onclick = (event) => { closeSlideShow(event); }
+closeBtn.onclick = (event) => { closeSlideShow(event); }
 
 // CREATE GRID VIEW - 'GALLERY'
 
 var galleryFragment = document.createDocumentFragment();
-
 photos.forEach(photo => {
   // create thumbnail
   let thumbnail = document.createElement('DIV')
@@ -56,14 +56,11 @@ photos.forEach(photo => {
   // add thumbnail to gallery fragment
   galleryFragment.appendChild(thumbnail)
 })
-
-// dump gallery fragment children into DOM all at once to reduce reflow
 document.getElementById('gallery').appendChild(galleryFragment)
 
 // CREATE DETAIL VIEW - 'SLIDESHOW'
 
 var slideshowFragment = document.createDocumentFragment();
-
 photos.forEach(photo => {
   // create image element
   let image = document.createElement('DIV')
@@ -76,14 +73,13 @@ photos.forEach(photo => {
   slide.className = 'slide'
   slide.id = photo.id
   slide.title = photo.name
-  slide.onclick = (event) => { openSlide(event); }
   slide.appendChild(image)
   // add slide to slideshow fragment
   slideshowFragment.appendChild(slide)
 })
-
-// dump slideshow fragment children into DOM all at once to reduce reflow
 document.getElementById('slideshow').appendChild(slideshowFragment)
+
+// for testing only
 
 document.getElementById('login').remove()
 document.getElementById('protected').classList.replace('hide', 'show')
