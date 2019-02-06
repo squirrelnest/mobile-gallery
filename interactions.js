@@ -13,41 +13,42 @@ export var offsetY = 0; // difference between startY and endY
 
 // INTERACTIONS
 
-export const openSlide = (event) => {
-  // retrieve slide details
-  let pattern = /\d/
-  currentId = pattern.exec(event.target.id)[0]
-  currentNode = document.getElementById(currentId)
-  updateTitle()
+export const openSlideShow = (event) => {
+   // set global variables
+   let pattern = /\d/
+   currentId = pattern.exec(event.target.id)[0]
+   slideshow.classList.add('show')
+   // get first slide
+   currentNode = document.getElementById(currentId)
+   updateTitle()
+   openSlide()
+   openOverlay()
+}
+
+export const openSlide = () => {
   // change styles
-  slideshow.classList.add('show')
   currentNode.classList.add('openSlide')
-  tools.classList.add('show')
-  tools.classList.add('openOverlay')
-  scrim.classList.add('show')
-  scrim.classList.add('fadeIn')
   // attach event handlers
   currentNode.ontouchstart = (event) => { handleTouchStart(event); }
   currentNode.ontouchmove = (event) => { handleTouchMove(event); }
   currentNode.ontouchend = (event) => { handleTouchEnd(event); }
 }
 
+export const openOverlay = () => {
+  tools.classList.add('show')
+  tools.classList.add('openOverlay')
+  scrim.classList.add('show')
+  scrim.classList.add('fadeIn')
+}
+
 export const getNextImage = () => {
-  // deactivate current node
-  currentNode.classList.remove('openSlide')
-  currentNode.removeAttribute('style')
-  currentNode.ontouchstart = null
-  currentNode.ontouchmove = null
-  currentNode.ontouchend = null
-  // activate new node
-  let next = document.getElementById(currentId)
-  next.classList.add('openSlide')
-  next.ontouchstart = (event) => { handleTouchStart(event) }
-  next.ontouchmove = (event) => { handleTouchMove(event) }
-  next.ontouchend = (event) => { handleTouchEnd(event) }
-  // set currentNode to next node
-  currentNode = next
+  // deactivate current slide
+  closeSlide()
+  // set next slide as current slide
+  currentNode = document.getElementById(currentId)
+  // activate new slide
   updateTitle()
+  openSlide()
 }
 
 export const updateTitle = () => {
@@ -68,20 +69,27 @@ export const titleText = (text='default') => {
   return photoTitle;
 }
 
-export const closeSlide = (event) => {
-  event.preventDefault()
-  event.stopPropagation()
-  // detach event handlers
+export const closeSlide = () => {
+  // change styles
   currentNode.classList.remove('openSlide')
   currentNode.removeAttribute('style')
+  // remove event handlers
   currentNode.ontouchstart = null
   currentNode.ontouchmove = null
   currentNode.ontouchend = null
-  // change styles
+}
+
+export const closeSlideShow = (event) => {
+  event.preventDefault()
+  event.stopPropagation()
+  // close current slide
+  closeSlide()
+  // close overlays and scrims
   scrim.classList.remove('fadeIn')
   scrim.classList.remove('show')
   tools.classList.remove('show')
   tools.classList.remove('openOverlay')
+  //close slideshow
   slideshow.classList.remove('show')
 }
 
@@ -112,7 +120,7 @@ export const handleTouchMove = (event) => {
 export const handleTouchEnd = (event) => {
   if (event.target.id === 'titlebar' || event.target.parentNode.id === 'titlebar') {
     // close slide if titlebar tapped
-    closeSlide(event);
+    closeSlideShow(event);
   } else if (
     Math.abs(offsetX) >= document.getElementById('gallery').clientWidth/6 ||
     Math.abs(offsetY) >= document.getElementById('gallery').clientHeight/6) {

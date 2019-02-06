@@ -1,7 +1,9 @@
 import {
   login,
+  openSlideShow,
   openSlide,
   closeSlide,
+  closeSlideShow,
   handleTouchStart,
   handleTouchMove,
   handleTouchEnd
@@ -49,7 +51,7 @@ photos.forEach(photo => {
   thumbnail.id = `thumbnail_${photo.id}`
   thumbnail.title = photo.name
   thumbnail.style.backgroundImage = 'url(' + photo.url + ')'
-  thumbnail.onclick = (event) => { openSlide(event); }
+  thumbnail.onclick = (event) => { openSlideShow(event); }
   // add thumbnail to gallery
   document.getElementById('gallery').appendChild(thumbnail)
 })
@@ -59,18 +61,16 @@ photos.forEach(photo => {
 photos.forEach(photo => {
   // create image element
   let image = document.createElement('DIV')
-  image.id = photo.id
-  image.title = photo.name
   image.setAttribute('role', 'img')
   image.setAttribute('aria-label', photo.name)
   image.style.backgroundImage = 'url(' + photo.url + ')'
   image.className = 'image'
-  image.onclick = (event) => { openSlide(event); }
   // create slide for image
   let slide = document.createElement('DIV')
   slide.className = 'slide'
   slide.id = photo.id
   slide.title = photo.name
+  slide.onclick = (event) => { openSlide(event); }
   slide.appendChild(image)
   // add slide to gallery
   document.getElementById('slideshow').appendChild(slide)
