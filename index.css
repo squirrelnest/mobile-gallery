@@ -152,10 +152,6 @@ h5 {
   background-position: center;
   width: 100%;
   height: 100%;
-  /* animation-name: bubble;
-  animation-duration: 0.4s;
-  animation-timing-function: ease;
-  animation-fill-mode: forwards; */
 }
 
 .tools {
@@ -208,19 +204,13 @@ h5 {
   100% {opacity: 0; visibility: hidden;}
 }
 
-@keyframes shrink {
-  0%   {width: 100%; visibility: visible;}
-  99% {width: 0%; visibility: visible;}
-  100% {visibility: hidden;}
-}
-
 .fadeOut {
-  animation: fade .3s ease 1 forwards;
+  animation: fade .4s ease 1 forwards;
   animation-fill-mode: forwards;
 }
 
 .fadeIn {
-  animation: fade .3s ease 1 reverse;
+  animation: fade .4s ease 1 reverse;
   animation-fill-mode: forwards;
 }
 
@@ -231,15 +221,10 @@ h5 {
   animation-fill-mode: forwards;
 }
 
-.closeSlide {
-  animation-name: shrink;
-  animation-duration: .4s;
-}
-
 .openSlide {
   z-index: 3;
   opacity: 1;
-  transition: opacity 0.6s ease; 
+  transition: opacity 0.5s ease; 
 }
 
 .openOverlay {
