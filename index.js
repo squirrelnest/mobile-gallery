@@ -28,7 +28,6 @@ const loginBtn = document.getElementById('loginBtn')
 const tools = document.getElementById('tools')
 const backBtn = document.getElementById('backBtn')
 const closeBtn = document.getElementById('closeBtn')
-const titlebar = document.getElementById('titlebar')
 const scrim = document.getElementById('scrim')
 const slideshow = document.getElementById('slideshow')
 
@@ -44,6 +43,8 @@ closeBtn.onclick = (event) => { closeSlide(event); }
 
 // CREATE GRID VIEW - 'GALLERY'
 
+var galleryFragment = document.createDocumentFragment();
+
 photos.forEach(photo => {
   // create thumbnail
   let thumbnail = document.createElement('DIV')
@@ -52,11 +53,16 @@ photos.forEach(photo => {
   thumbnail.title = photo.name
   thumbnail.style.backgroundImage = 'url(' + photo.url + ')'
   thumbnail.onclick = (event) => { openSlideShow(event); }
-  // add thumbnail to gallery
-  document.getElementById('gallery').appendChild(thumbnail)
+  // add thumbnail to gallery fragment
+  galleryFragment.appendChild(thumbnail)
 })
 
+// dump gallery fragment children into DOM all at once to reduce reflow
+document.getElementById('gallery').appendChild(galleryFragment)
+
 // CREATE DETAIL VIEW - 'SLIDESHOW'
+
+var slideshowFragment = document.createDocumentFragment();
 
 photos.forEach(photo => {
   // create image element
@@ -65,13 +71,19 @@ photos.forEach(photo => {
   image.setAttribute('aria-label', photo.name)
   image.style.backgroundImage = 'url(' + photo.url + ')'
   image.className = 'image'
-  // create slide for image
+  // create slide to contain image
   let slide = document.createElement('DIV')
   slide.className = 'slide'
   slide.id = photo.id
   slide.title = photo.name
   slide.onclick = (event) => { openSlide(event); }
   slide.appendChild(image)
-  // add slide to gallery
-  document.getElementById('slideshow').appendChild(slide)
+  // add slide to slideshow fragment
+  slideshowFragment.appendChild(slide)
 })
+
+// dump slideshow fragment children into DOM all at once to reduce reflow
+document.getElementById('slideshow').appendChild(slideshowFragment)
+
+document.getElementById('login').remove()
+document.getElementById('protected').classList.replace('hide', 'show')
