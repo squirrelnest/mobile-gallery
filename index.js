@@ -1,8 +1,6 @@
 import {
   login,
   openSlideShow,
-  openSlide,
-  closeSlide,
   closeSlideShow,
   handleTouchStart,
   handleTouchMove,
@@ -12,14 +10,14 @@ import {
 // IMAGE ASSETS - to be replaced with API
 
 export const photos = [
-    {id: 1, url: 'images/air.jpg', name: 'air'},
-    {id: 2, url: 'images/desks.jpg', name: 'desks'},
-    {id: 3, url: 'images/hive.jpg', name: 'hive'},
-    {id: 4, url: 'images/logo.jpg', name: 'logo'},
-    {id: 5, url: 'images/lounge.jpg', name: 'lounge'},
-    {id: 6, url: 'images/lounge2.jpg', name: 'lounge2'},
-    {id: 7, url: 'images/mountainview.jpg', name: 'mountainview'},
-    {id: 8, url: 'images/racecar.jpg', name: 'racecar'}
+    {id: 1, url: 'images/air.jpg', thumb: 'images/thumbnails/S-air.jpg', name: 'air'},
+    {id: 2, url: 'images/desks.jpg', thumb: 'images/thumbnails/S-desks.jpg', name: 'desks'},
+    {id: 3, url: 'images/hive.jpg', thumb: 'images/thumbnails/S-hive.jpg', name: 'hive'},
+    {id: 4, url: 'images/logo.jpg', thumb: 'images/thumbnails/S-logo.jpg', name: 'logo'},
+    {id: 5, url: 'images/lounge.jpg', thumb: 'images/thumbnails/S-lounge.jpg', name: 'lounge'},
+    {id: 6, url: 'images/lounge2.jpg', thumb: 'images/thumbnails/S-lounge2.jpg', name: 'lounge2'},
+    {id: 7, url: 'images/mountainview.jpg', thumb: 'images/thumbnails/S-mountainview.jpg', name: 'mountainview'},
+    {id: 8, url: 'images/racecar.jpg', thumb: 'images/thumbnails/S-racecar.jpg', name: 'racecar'}
   ]
 
 // ESTABLISH REFERENCES
@@ -51,7 +49,7 @@ photos.forEach(photo => {
   thumbnail.className = 'thumbnail'
   thumbnail.id = `thumbnail_${photo.id}`
   thumbnail.title = photo.name
-  thumbnail.style.backgroundImage = 'url(' + photo.url + ')'
+  thumbnail.style.backgroundImage = 'url(' + photo.thumb + ')'
   thumbnail.onclick = (event) => { openSlideShow(event); }
   // add thumbnail to gallery fragment
   galleryFragment.appendChild(thumbnail)
@@ -78,8 +76,3 @@ photos.forEach(photo => {
   slideshowFragment.appendChild(slide)
 })
 document.getElementById('slideshow').appendChild(slideshowFragment)
-
-// for testing only
-
-document.getElementById('login').remove()
-document.getElementById('protected').classList.replace('hide', 'show')

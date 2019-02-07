@@ -8,12 +8,10 @@
     <meta name="description" content="Touch-friendly image gallery for mobile">
     <meta name="author" content="Mikka Pineda">
     <title>Image Gallery</title>
-    <!-- Include manifest.json for behavior when PWA is 'installed' on device  -->
+    <!-- Include manifest.json for PWA when 'installed' on device  -->
     <link rel="manifest" href="/manifest.json">
-    <!-- Download Roboto font -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <!-- Download style sheet -->
-    <link href="index.css" rel="stylesheet">
+    <!-- Add canonical link -->
+    <link rel="canonical" href="https://mobile-gallery.herokuapp.com/" />
     <!-- Add favicon -->
     <link rel="apple-touch-icon" sizes="57x57" href="favicon.ico/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="favicon.ico/apple-icon-60x60.png">
@@ -30,10 +28,36 @@
     <link rel="icon" type="image/png" sizes="16x16" href="favicon.ico/favicon-16x16.png">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
+    <style>
+
+      body {
+        visibility: hidden;
+        opacity:0;
+      }
+
+      .login {
+        visibility: visible;
+        display: flex !important;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        margin: auto;
+        justify-content: center;
+        padding: 1rem;
+      }
+
+      .loginBtn {
+        width: 100%;
+        background-color: purple;
+        color: white;
+        padding: 1rem;
+        text-align: center;
+      }
+      
+    </style>
   </head>
   <body>
-    <form id="login" class="login show">
+    <form id="login" class="login">
       <input type="password" id="password" aria-label="password" autocomplete="password"/>
       <div id="loginBtn" class="loginBtn"><span>LOGIN</span></div>
     </form>
@@ -57,7 +81,30 @@
       </div>
       <div id="gallery" class="gallery"></div>
     </div>
+    
+    <noscript id="deferred-styles">
+      <link href="index.css" rel="stylesheet">
+    </noscript>
+
+    <script>
+      if('serviceWorker' in navigator) {
+        navigator.serviceWorker
+          .register('/service-worker.js')
+          .then(function() { console.log("Service Worker Registered"); });
+      }
+    </script>
+    
   </body>
-  <script type="module" src="index.js" ></script>
-  <script type="module" src="interactions.js"></script>
+  <script>
+    const loadDeferredStyles = () => {
+      const addStylesNode = document.getElementById("deferred-styles");
+      const replacement = document.createElement("DIV");
+      replacement.innerHTML = addStylesNode.textContent;
+      document.body.appendChild(replacement)
+      addStylesNode.parentElement.removeChild(addStylesNode);
+    };
+    window.addEventListener('load', loadDeferredStyles);
+  </script>
+  <script type="module" src="index.js" async></script>
+  <script type="module" src="interactions.js" async></script> 
 </html>
