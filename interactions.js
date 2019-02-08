@@ -1,4 +1,4 @@
-import { photos } from './index.js'
+import { photos, createSlideShow } from './index.js'
 
 // STATE
 
@@ -11,9 +11,23 @@ export var startY = 0; // first x-coordinate of contact point
 export var endY = 0; // final x-coordinate of contact point
 export var offsetY = 0; // difference between startY and endY
 
-// INTERACTIONS
+// OPERATIONS
+
+export const login = (event) => {
+  event.preventDefault()
+  // not very secure w/o hashing but keeps out crawlers and riff raff
+  var raw_password = document.getElementById('password').value
+  if (raw_password === 'hordor') {
+    document.getElementById('login').remove()
+    document.getElementById('protected').classList.replace('hide', 'show')
+  } else {
+    alert('Wrong password')
+    document.getElementById('password').value = ''
+  }
+}
 
 export const openSlideShow = (event) => {
+  createSlideShow()
    // set global variables
    let pattern = /\d/
    currentId = pattern.exec(event.target.id)[0]
@@ -130,18 +144,5 @@ export const handleTouchEnd = (event) => {
     tools.classList.toggle('show')
     tools.classList.toggle('openOverlay')
     currentSlide.style.transform = `translate3d(0, 0, 0)`
-  }
-}
-
-export const login = (event) => {
-  event.preventDefault()
-  // not very secure w/o hashing but keeps out crawlers and riff raff
-  var raw_password = document.getElementById('password').value
-  if (raw_password === 'hordor') {
-    document.getElementById('login').remove()
-    document.getElementById('protected').classList.replace('hide', 'show')
-  } else {
-    alert('Wrong password')
-    document.getElementById('password').value = ''
   }
 }

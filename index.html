@@ -1,33 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="noindex, nofollow">
-    <meta name="theme-color" content="#000000">
-    <meta name="description" content="Touch-friendly image gallery for mobile">
-    <meta name="author" content="Mikka Pineda">
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <meta name='robots' content='noindex, nofollow'>
+    <meta name='theme-color' content='#000000'>
+    <meta name='description' content='Touch-friendly image gallery for mobile'>
+    <meta name='author' content='Mikka Pineda'>
     <title>Image Gallery</title>
     <!-- Include manifest.json for PWA when 'installed' on device  -->
-    <link rel="manifest" href="/manifest.json">
+    <link rel='manifest' href='/manifest.json'>
     <!-- Add canonical link -->
-    <link rel="canonical" href="https://mobile-gallery.herokuapp.com/" />
+    <link rel='canonical' href='https://mobile-gallery.herokuapp.com/' />
     <!-- Add favicon -->
-    <link rel="apple-touch-icon" sizes="57x57" href="favicon.ico/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="favicon.ico/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="favicon.ico/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="favicon.ico/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="favicon.ico/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="favicon.ico/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="favicon.ico/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="favicon.ico/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="favicon.ico/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="favicon.ico/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon.ico/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="favicon.ico/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon.ico/favicon-16x16.png">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <link rel='apple-touch-icon' sizes='57x57' href='favicon.ico/apple-icon-57x57.png'>
+    <link rel='apple-touch-icon' sizes='60x60' href='favicon.ico/apple-icon-60x60.png'>
+    <link rel='apple-touch-icon' sizes='72x72' href='favicon.ico/apple-icon-72x72.png'>
+    <link rel='apple-touch-icon' sizes='76x76' href='favicon.ico/apple-icon-76x76.png'>
+    <link rel='apple-touch-icon' sizes='114x114' href='favicon.ico/apple-icon-114x114.png'>
+    <link rel='apple-touch-icon' sizes='120x120' href='favicon.ico/apple-icon-120x120.png'>
+    <link rel='apple-touch-icon' sizes='144x144' href='favicon.ico/apple-icon-144x144.png'>
+    <link rel='apple-touch-icon' sizes='152x152' href='favicon.ico/apple-icon-152x152.png'>
+    <link rel='apple-touch-icon' sizes='180x180' href='favicon.ico/apple-icon-180x180.png'>
+    <link rel='icon' type='image/png' sizes='192x192' href='favicon.ico/android-icon-192x192.png'>
+    <link rel='icon' type='image/png' sizes='32x32' href='favicon.ico/favicon-32x32.png'>
+    <link rel='icon' type='image/png' sizes='96x96' href='favicon.ico/favicon-96x96.png'>
+    <link rel='icon' type='image/png' sizes='16x16' href='favicon.ico/favicon-16x16.png'>
+    <meta name='msapplication-TileColor' content='#ffffff'>
+    <meta name='msapplication-TileImage' content='/ms-icon-144x144.png'>
     <style>
 
       body {
@@ -57,54 +57,61 @@
     </style>
   </head>
   <body>
-    <form id="login" class="login">
-      <input type="password" id="password" aria-label="password" autocomplete="password"/>
-      <div id="loginBtn" class="loginBtn"><span>LOGIN</span></div>
+    <form id='login' class='login'>
+      <input type='password' id='password' aria-label='password' autocomplete='password'/>
+      <div id='loginBtn' class='loginBtn'><span>LOGIN</span></div>
     </form>
-    <div id="protected" class="hide">
-      <header id="header" class="header">Image gallery</header>
-      <div id="tools" class="tools">
-        <div id="titlebar" class="tool titlebar">
-          <img id="backBtn" src="icons/back.svg" class="icon">
-          <div id="titleContainer"><h1 id="titleText">lounge2</h1></div>
-          <h1 id="closeBtn" class="closeBtn">✕</h1>
+    <div id='protected' class='hide'>
+      <header id='header' class='header'>Image gallery</header>
+      <div id='tools' class='tools'>
+        <div id='titlebar' class='tool titlebar'>
+          <img id='backBtn' src='icons/back.svg' class='icon'>
+          <div id='titleContainer'><h1 id='titleText'>lounge2</h1></div>
+          <h1 id='closeBtn' class='closeBtn'>✕</h1>
         </div>
-        <div class="tool footer">
-          <img src="icons/plusOne.svg" id="plusOne" class="icon">
-          <img src="icons/comment.svg" id="comment" class="icon">
-          <img src="icons/add.svg" id="add" class="icon">
-          <img src="icons/share.svg" id="share" class="icon">
+        <div class='tool footer'>
+          <img src='icons/plusOne.svg' id='plusOne' class='icon'>
+          <img src='icons/comment.svg' id='comment' class='icon'>
+          <img src='icons/add.svg' id='add' class='icon'>
+          <img src='icons/share.svg' id='share' class='icon'>
         </div>
       </div>
-      <div id="slideshow" class="slideshow">
-        <div id="scrim" class="scrim"></div>
+      <div id='slideshow' class='slideshow'>
+        <div id='scrim' class='scrim'></div>
       </div>
-      <div id="gallery" class="gallery"></div>
+      <div id='gallery' class='gallery'></div>
     </div>
     
-    <noscript id="deferred-styles">
-      <link href="index.css" rel="stylesheet">
+    <noscript id='deferred'>
+      <link href='index.css' rel='stylesheet'>
     </noscript>
 
     <script>
       if('serviceWorker' in navigator) {
         navigator.serviceWorker
           .register('/service-worker.js')
-          .then(function() { console.log("Service Worker Registered"); });
+          .then(function() { console.log('Service Worker Registered'); })
       }
     </script>
     
   </body>
   <script>
-    const loadDeferredStyles = () => {
-      const addStylesNode = document.getElementById("deferred-styles");
-      const replacement = document.createElement("DIV");
-      replacement.innerHTML = addStylesNode.textContent;
+    const loadDeferred = () => {
+      const addStylesNode = document.getElementById('deferred')
+      const replacement = document.createElement('DIV')
+      replacement.innerHTML = addStylesNode.textContent
       document.body.appendChild(replacement)
-      addStylesNode.parentElement.removeChild(addStylesNode);
-    };
-    window.addEventListener('load', loadDeferredStyles);
+      addStylesNode.parentElement.removeChild(addStylesNode)
+      loadImages()
+    }
+    const loadImages = () => { 
+      const thumbs = document.querySelectorAll('.thumbnail')
+      thumbs.forEach(thumb => {
+        thumb.classList.add('loaded') 
+      })
+    }
+    window.addEventListener('load', loadDeferred)
   </script>
-  <script type="module" src="index.js" async></script>
-  <script type="module" src="interactions.js" async></script> 
+  <script type='module' src='index.js' async></script>
+  <script type='module' src='interactions.js' defer></script> 
 </html>

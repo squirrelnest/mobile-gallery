@@ -10,15 +10,15 @@ import {
 // IMAGE ASSETS - to be replaced with API
 
 export const photos = [
-    {id: 1, url: 'images/air.jpg', thumb: 'images/thumbnails/S-air.jpg', name: 'air'},
-    {id: 2, url: 'images/desks.jpg', thumb: 'images/thumbnails/S-desks.jpg', name: 'desks'},
-    {id: 3, url: 'images/hive.jpg', thumb: 'images/thumbnails/S-hive.jpg', name: 'hive'},
-    {id: 4, url: 'images/logo.jpg', thumb: 'images/thumbnails/S-logo.jpg', name: 'logo'},
-    {id: 5, url: 'images/lounge.jpg', thumb: 'images/thumbnails/S-lounge.jpg', name: 'lounge'},
-    {id: 6, url: 'images/lounge2.jpg', thumb: 'images/thumbnails/S-lounge2.jpg', name: 'lounge2'},
-    {id: 7, url: 'images/mountainview.jpg', thumb: 'images/thumbnails/S-mountainview.jpg', name: 'mountainview'},
-    {id: 8, url: 'images/racecar.jpg', thumb: 'images/thumbnails/S-racecar.jpg', name: 'racecar'}
-  ]
+  {id: 1, url: 'images/air.jpg', thumb: 'images/thumbnails/S-air.jpg', name: 'air'},
+  {id: 2, url: 'images/desks.jpg', thumb: 'images/thumbnails/S-desks.jpg', name: 'desks'},
+  {id: 3, url: 'images/hive.jpg', thumb: 'images/thumbnails/S-hive.jpg', name: 'hive'},
+  {id: 4, url: 'images/logo.jpg', thumb: 'images/thumbnails/S-logo.jpg', name: 'logo'},
+  {id: 5, url: 'images/lounge.jpg', thumb: 'images/thumbnails/S-lounge.jpg', name: 'lounge'},
+  {id: 6, url: 'images/lounge2.jpg', thumb: 'images/thumbnails/S-lounge2.jpg', name: 'lounge2'},
+  {id: 7, url: 'images/mountainview.jpg', thumb: 'images/thumbnails/S-mountainview.jpg', name: 'mountainview'},
+  {id: 8, url: 'images/racecar.jpg', thumb: 'images/thumbnails/S-racecar.jpg', name: 'racecar'}
+]
 
 // ESTABLISH REFERENCES
 
@@ -49,7 +49,7 @@ photos.forEach(photo => {
   thumbnail.className = 'thumbnail'
   thumbnail.id = `thumbnail_${photo.id}`
   thumbnail.title = photo.name
-  thumbnail.style.backgroundImage = 'url(' + photo.thumb + ')'
+  thumbnail.style.backgroundImage = 'url(' + photo.url + ')'
   thumbnail.onclick = (event) => { openSlideShow(event); }
   // add thumbnail to gallery fragment
   galleryFragment.appendChild(thumbnail)
@@ -58,21 +58,23 @@ document.getElementById('gallery').appendChild(galleryFragment)
 
 // CREATE DETAIL VIEW - 'SLIDESHOW'
 
-var slideshowFragment = document.createDocumentFragment();
-photos.forEach(photo => {
-  // create image element
-  let image = document.createElement('DIV')
-  image.setAttribute('role', 'img')
-  image.setAttribute('aria-label', photo.name)
-  image.style.backgroundImage = 'url(' + photo.url + ')'
-  image.className = 'image'
-  // create slide to contain image
-  let slide = document.createElement('DIV')
-  slide.className = 'slide'
-  slide.id = photo.id
-  slide.title = photo.name
-  slide.appendChild(image)
-  // add slide to slideshow fragment
-  slideshowFragment.appendChild(slide)
-})
-document.getElementById('slideshow').appendChild(slideshowFragment)
+export const createSlideShow = () => {
+  var slideshowFragment = document.createDocumentFragment();
+  photos.forEach(photo => {
+    // create image element
+    let image = document.createElement('DIV')
+    image.setAttribute('role', 'img')
+    image.setAttribute('aria-label', photo.name)
+    image.style.backgroundImage = 'url(' + photo.url + ')'
+    image.className = 'image'
+    // create slide to contain image
+    let slide = document.createElement('DIV')
+    slide.className = 'slide'
+    slide.id = photo.id
+    slide.title = photo.name
+    slide.appendChild(image)
+    // add slide to slideshow fragment
+    slideshowFragment.appendChild(slide)
+  })
+  document.getElementById('slideshow').appendChild(slideshowFragment)
+}
