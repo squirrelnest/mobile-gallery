@@ -242,14 +242,6 @@ h5 {
 
 }
 
-@supports (-webkit-appearance:none) {
-
-  .image { /* ADJUST FOR ANDROID CHROME URL BAR */
-    height: calc(100vh - 56px);
-  }
-
-}
-
 @media only screen and (orientation: portrait) { /* MOBILE */
 
   .image { 

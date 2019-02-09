@@ -112,6 +112,7 @@ export const fetchPhotos = (currentId) => {
 }
 
 // UPDATE SLIDES WITH NEXT SET OF PHOTOS
+
 export const createSlide = (photo, node_id) => { // leave slide node in place and replace its content with new photo
   let slide = document.querySelectorAll('.slide')[node_id] 
   slide.setAttribute('id', photo.id)
