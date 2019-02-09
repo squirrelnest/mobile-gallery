@@ -14,14 +14,14 @@ var slideCounter = 0 // total number of slides created
 // IMAGE ASSETS - to be replaced with API
 
 export const photos = [
-  {id: 1, url: 'images/air.jpg', thumb: 'images/thumbnails/S-air.jpg', name: 'air'},
-  {id: 2, url: 'images/desks.jpg', thumb: 'images/thumbnails/S-desks.jpg', name: 'desks'},
-  {id: 3, url: 'images/hive.jpg', thumb: 'images/thumbnails/S-hive.jpg', name: 'hive'},
-  {id: 4, url: 'images/logo.jpg', thumb: 'images/thumbnails/S-logo.jpg', name: 'logo'},
-  {id: 5, url: 'images/lounge.jpg', thumb: 'images/thumbnails/S-lounge.jpg', name: 'lounge'},
-  {id: 6, url: 'images/lounge2.jpg', thumb: 'images/thumbnails/S-lounge2.jpg', name: 'lounge2'},
-  {id: 7, url: 'images/mountainview.jpg', thumb: 'images/thumbnails/S-mountainview.jpg', name: 'mountainview'},
-  {id: 8, url: 'images/racecar.jpg', thumb: 'images/thumbnails/S-racecar.jpg', name: 'racecar'}
+  {id: 1, url: 'images/jpeg/air.jpg', thumb: 'images/thumbnails/S-air.jpg', webp: 'images/webp/air.webp', name: 'air'},
+  {id: 2, url: 'images/jpeg/desks.jpg', thumb: 'images/thumbnails/S-desks.jpg', webp: 'images/webp/desks.webp', name: 'desks'},
+  {id: 3, url: 'images/jpeg/hive.jpg', thumb: 'images/thumbnails/S-hive.jpg', webp: 'images/webp/hive.webp', name: 'hive'},
+  {id: 4, url: 'images/jpeg/logo.jpg', thumb: 'images/thumbnails/S-logo.jpg', webp: 'images/webp/logo.webp', name: 'logo'},
+  {id: 5, url: 'images/jpeg/lounge.jpg', thumb: 'images/thumbnails/S-lounge.jpg', webp: 'images/webp/lounge.webp', name: 'lounge'},
+  {id: 6, url: 'images/jpeg/lounge2.jpg', thumb: 'images/thumbnails/S-lounge2.jpg', webp: 'images/webp/lounge2.webp', name: 'lounge2'},
+  {id: 7, url: 'images/jpeg/mountainview.jpg', thumb: 'images/thumbnails/S-mountainview.jpg', webp: 'images/webp/mountainview.webp', name: 'mountainview'},
+  {id: 8, url: 'images/jpeg/racecar.jpg', thumb: 'images/thumbnails/S-racecar.jpg', webp: 'images/webp/racecar.webp', name: 'racecar'}
 ]
 
 // ESTABLISH REFERENCES
@@ -53,7 +53,7 @@ photos.forEach(photo => {
   thumbnail.className = 'thumbnail'
   thumbnail.id = `thumbnail_${photo.id}`
   thumbnail.title = photo.name
-  thumbnail.style.backgroundImage = 'url(' + photo.url + ')'
+  thumbnail.style.backgroundImage = 'url(' + photo.thumb + ')'
   thumbnail.onclick = (event) => { openSlideShow(event); }
   // add thumbnail to gallery fragment
   galleryFragment.appendChild(thumbnail)
@@ -67,11 +67,13 @@ export const createSlideShow = () => {
   var slideshowFragment = document.createDocumentFragment();
   photos.forEach(photo => {
     // create image element
-    let image = document.createElement('DIV')
+    let image = document.createElement('IMG')
     image.setAttribute('role', 'img')
     image.setAttribute('aria-label', photo.name)
-    image.style.backgroundImage = 'url(' + photo.url + ')'
+    // image.style.backgroundImage = 'url(' + photo.url + ')'
     image.className = 'image'
+    image.srcset=`${photo.webp} 1024w, ${photo.url} 400w`
+    image.src = photo.url
     // create slide to contain image
     let slide = document.createElement('DIV')
     slide.className = 'slide'
@@ -84,3 +86,5 @@ export const createSlideShow = () => {
   })
   document.getElementById('slideshow').appendChild(slideshowFragment)
 }
+
+// document.getElementById('slideshow').style.setProperty('--height', window.innerHeight);
