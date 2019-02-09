@@ -66,14 +66,20 @@ export const createSlideShow = () => {
   if (slideCounter == photos.length) { return; }
   var slideshowFragment = document.createDocumentFragment();
   photos.forEach(photo => {
+    // set image sources
+    let sourceWebP = document.createElement('SOURCE')
+    sourceWebP.type = 'image/webp'
+    sourceWebP.srcset = photo.webp
+    let sourceDefault = document.createElement('IMG')
+    sourceDefault.src = photo.url
+    sourceDefault.alt = photo.name
+    sourceDefault.className = 'image'
     // create image element
-    let image = document.createElement('IMG')
+    let image = document.createElement('PICTURE')
     image.setAttribute('role', 'img')
     image.setAttribute('aria-label', photo.name)
-    // image.style.backgroundImage = 'url(' + photo.url + ')'
-    image.className = 'image'
-    image.srcset=`${photo.webp} 1024w, ${photo.url} 400w`
-    image.src = photo.url
+    image.appendChild(sourceWebP)
+    image.appendChild(sourceDefault)
     // create slide to contain image
     let slide = document.createElement('DIV')
     slide.className = 'slide'
@@ -87,4 +93,8 @@ export const createSlideShow = () => {
   document.getElementById('slideshow').appendChild(slideshowFragment)
 }
 
-// document.getElementById('slideshow').style.setProperty('--height', window.innerHeight);
+window.addEventListener('load', () => { 
+  document.querySelectorAll('.image').forEach( img => {
+    img.style.setProperty('--height', window.screen.availHeight);
+  })
+})

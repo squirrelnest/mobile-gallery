@@ -231,13 +231,21 @@ h5 {
   margin: 0;
 }
 
-/* MEDIA QUERIES ***************/
+/* AT-RULES ***************/
 
 @media only screen and (min-width: 800px) { /* DESKTOP */
 
   .login {
     width: 33%;
     padding: 1rem;
+  }
+
+}
+
+@supports (-webkit-appearance:none) {
+
+  .image { /* ADJUST FOR ANDROID CHROME URL BAR */
+    height: calc(100vh - 56px);
   }
 
 }
@@ -250,4 +258,3 @@ h5 {
   }
 
 }
-
