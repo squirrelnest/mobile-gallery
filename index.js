@@ -7,6 +7,10 @@ import {
   handleTouchEnd
 } from './interactions.js'
 
+// STATE
+
+var slideCounter = 0 // total number of slides created
+
 // IMAGE ASSETS - to be replaced with API
 
 export const photos = [
@@ -59,6 +63,7 @@ document.getElementById('gallery').appendChild(galleryFragment)
 // CREATE DETAIL VIEW - 'SLIDESHOW'
 
 export const createSlideShow = () => {
+  if (slideCounter == photos.length) { return; }
   var slideshowFragment = document.createDocumentFragment();
   photos.forEach(photo => {
     // create image element
@@ -75,6 +80,7 @@ export const createSlideShow = () => {
     slide.appendChild(image)
     // add slide to slideshow fragment
     slideshowFragment.appendChild(slide)
+    slideCounter++
   })
   document.getElementById('slideshow').appendChild(slideshowFragment)
 }
