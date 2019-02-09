@@ -1,4 +1,4 @@
-import { photos, createSlideShow } from './index.js'
+import { photos, fetchPhotos } from './index.js'
 
 // STATE
 
@@ -11,7 +11,7 @@ export var startY = 0; // first x-coordinate of contact point
 export var endY = 0; // final x-coordinate of contact point
 export var offsetY = 0; // difference between startY and endY
 
-// OPERATIONS
+// ACTIONS
 
 export const login = (event) => {
   event.preventDefault()
@@ -27,7 +27,6 @@ export const login = (event) => {
 }
 
 export const openSlideShow = (event) => {
-  createSlideShow()
    // set global variables
    let pattern = /\d/
    currentId = pattern.exec(event.target.id)[0]
@@ -125,7 +124,8 @@ export const handleTouchEnd = (event) => {
     if ( 
       (Math.abs(offsetX) > Math.abs(offsetY) && (offsetX) < 0) || 
       (Math.abs(offsetX) < Math.abs(offsetY) && (offsetY) < 0) ){ // if swipe left or up, go forward one image
-      if (currentId == photos.length) {
+      // fetchPhotos(currentId) 
+      if (currentId == 8) {
         currentId = 1
       } else {
         currentId ++
@@ -134,7 +134,7 @@ export const handleTouchEnd = (event) => {
       (Math.abs(offsetX) > Math.abs(offsetY) && (offsetX) > 0) || 
       (Math.abs(offsetX) < Math.abs(offsetY) && (offsetY) > 0) ){ // if swipe right or down, go back one image
       if (currentId == 1) {
-        currentId = photos.length
+        currentId = 8
       } else {
         currentId --
       }

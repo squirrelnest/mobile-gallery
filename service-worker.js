@@ -12,5 +12,5 @@ this.addEventListener('install', async function() {
 
 // The fetch event is fired every time the browser sends a request 
 self.addEventListener('fetch', function(event) {
-    console.log(event.request.url);
+    // console.log(event.request.url);
 });

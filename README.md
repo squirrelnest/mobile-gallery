@@ -78,7 +78,7 @@ My simple password protection is not very secure (inputs are not even hashed). I
 
 The below optimizations halved the Time to Interactive and First Meaningful Paint:
 
-* Optimized Images - I compressed, resized, and reencoded the images to reduce file sizes and page load times. I dropped the image quality down to 75%, which was the lowest level at which my humble human eyes could not perceive any difference from 100% quality. Though WebP and JPEG 2000 create smaller file sizes for similar image quality, I went with the JPG (RGB) format because all graphical web browsers support it.
+* Optimized Images - I compressed, resized, and reencoded the images to reduce file sizes and page load times. I dropped the image quality down to 75%, which was the lowest level at which my humble human eyes could not perceive any difference from 100% quality. Though WebP and JPEG 2000 create smaller file sizes for similar image quality, I default to JPG (RGB) format because all graphical web browsers support it. WebP images are only served if the browser supports it.
 
 * createDocumentFragment - Each time we add or remove a node to the DOM triggers a computationally expensive and browser-blocking reflow. I try to minimize reflows by creating and storing each node 'offsite' in a DocumentFragment (which lives outside the active DOM tree) then appending a batch of nodes to the DOM all at once - triggering only one reflow instead of several (one for each node).
 
@@ -91,7 +91,7 @@ The below optimizations halved the Time to Interactive and First Meaningful Pain
 * Bundle, minify, and compress text assets
 * Transpile ES6 to ES5 for legacy browsers
 * Add test coverage
-* Tailor images to device and bandwith by using <picture> and an API or CDN to optimize and serve images on-the-fly
+* Serve images from an API or CDN to optimize and serve images on-the-fly
 * Use more secure password protection (encryption or htaccess)
 * Add router to enable deep linking
 * Add secondary actions, such as sharing and commenting
