@@ -94,27 +94,30 @@ document.getElementById('slideshow').appendChild(slideshowFragment)
 
 // FETCH NEXT SET OF PHOTOS
 
-var node_id = 0;
+var node_index = 0;
 export const fetchPhotos = (currentId) => {
   // get data for next batch of photos 
 
   // append data to local photos store
   
-  // replace slide content and add thumbnails
-  if (node_id == 7) {
-    node_id = 0
-  } else {
-    node_id++
+  // replace slide content
+  for (var i=1; i<=8; i++) {
+    if (node_index == 7) {
+      node_index = 0
+    } else {
+      node_index++
+    }
+    createSlide(photos[currentId], node_index)
+    createThumbnail(photos[currentId])
   }
-  createSlide(photos[currentId], node_id)
-  createThumbnail(photos[currentId])
+  // add thumbnails
   document.getElementById('gallery').appendChild(galleryFragment)
 }
 
 // UPDATE SLIDES WITH NEXT SET OF PHOTOS
 
-export const createSlide = (photo, node_id) => { // leave slide node in place and replace its content with new photo
-  let slide = document.querySelectorAll('.slide')[node_id] 
+export const createSlide = (photo, node_index) => { // leave slide node in place and replace its content with new photo
+  let slide = document.querySelectorAll('.slide')[node_index] 
   slide.setAttribute('id', photo.id)
   slide.setAttribute('title', photo.name)
   let image = slide.querySelector('picture')

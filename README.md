@@ -84,10 +84,17 @@ The below optimizations halved the Time to Interactive and First Meaningful Pain
 
 * Eliminated Render Blocking Resources - To speed up initial render, I inlined critical CSS (CSS for the initial screen) into the head of the document and deferred loading of non-critical CSS with a small script at the end of the html file that dynamically appends a style node to the DOM after all resources have loaded (except for resources marked with the async or defer attribute). With the async attribute, I allow index.js to load asynchronously but pause the HTML parser to execute index.js because I need the script to attach event handlers and create DOM elements. With the defer attribute, I allow interaction.js to load asynchronously but defer its execution until after HTML parsing completes because the user cannot interact with elements that have not rendered yet.
 
+## Scalability
+
+A gallery of 500 photos would put us over the Lighthouse-recommended ~1000 node limit for maintaining decent runtime and memory performance. To support such massive galleries, I would consider reusing DOM nodes and replacing their content instead of creating and appending a new node to the tree. This would trigger a repaint but avoid the more costly reflow (layout thrashing). I began implementing this strategy as a circular buffer but ran out of time while debugging issues with two-way data binding as references to old nodes would disappear before the node was ready to be recycled. 
+
+If the images are stored and served externally, another strategy I would consider for scalability and load time minimization is caching image metadata so that we fetch images over the network piecemeal instead of fetching the entire gallery at once. More images can be loaded as the user scrolls down the gallery, giving the effect of 'infinite scrolling'. I would merge incoming data into an object to prevent duplicate image data from getting added to the gallery.
+
 ## TODO
 
 * Support multi-touch interactions, like pinch-zoom
-* Lazy load images as they move above the fold
+* Lazy load images as they move above the fold (infinite scrolling)
+* Implement circular or ring buffer
 * Bundle, minify, and compress text assets
 * Transpile ES6 to ES5 for legacy browsers
 * Add test coverage
