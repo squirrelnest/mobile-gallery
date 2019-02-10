@@ -7,9 +7,13 @@ import {
   handleTouchEnd
 } from './interactions.js'
 
-// STATE
+// GLOBAL VARIABLES
 
 var slideCounter = 0 // total number of slides created
+var node_index = 0;
+var slideshowFragment = document.createDocumentFragment();
+var galleryFragment = document.createDocumentFragment();
+
 
 // IMAGE ASSETS - to be replaced with API
 
@@ -47,7 +51,6 @@ closeBtn.onclick = (event) => { closeSlideShow(event); }
 
 // INITIALIZE 'GALLERY'
 
-var galleryFragment = document.createDocumentFragment();
 export const createThumbnail = (photo) => {
   // create thumbnail
   let thumbnail = document.createElement('DIV')
@@ -64,7 +67,6 @@ document.getElementById('gallery').appendChild(galleryFragment)
 
 // INITIALIZE 'SLIDESHOW'
 
-var slideshowFragment = document.createDocumentFragment();
 photos.slice(0,8).forEach(photo => {
   // set image sources
   let sourceWebP = document.createElement('SOURCE')
@@ -94,7 +96,6 @@ document.getElementById('slideshow').appendChild(slideshowFragment)
 
 // FETCH NEXT SET OF PHOTOS
 
-var node_index = 0;
 export const fetchPhotos = (currentId) => {
   // get data for next batch of photos 
 

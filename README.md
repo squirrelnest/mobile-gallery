@@ -90,12 +90,16 @@ A gallery of 500 photos would put us over the Lighthouse-recommended ~1000 node 
 
 If the images are stored and served externally, another strategy I would consider for scalability and load time minimization is caching image metadata so that we fetch images over the network piecemeal instead of fetching the entire gallery at once. More images can be loaded as the user scrolls down the gallery, giving the effect of 'infinite scrolling'. I would merge incoming data into an object to prevent duplicate image data from getting added to the gallery.
 
+## Maintainability
+
+ As the codebase grows and dependencies may be added, I would break up the code further into reusable modules and use a dependency management tool such as Webpack to split up and deliver code as needed. Modularizing the code will also clean up the global namespace so global variables avoid conflicting with variables added later. For now, the small size of the app makes it acceptable to load all the scripts rather than making many network requests for such small amounts of code.
+
 ## TODO
 
 * Support multi-touch interactions, like pinch-zoom
 * Lazy load images as they move above the fold (infinite scrolling)
 * Implement circular or ring buffer
-* Bundle, minify, and compress text assets
+* Bundle and minify code with Webpack
 * Transpile ES6 to ES5 for legacy browsers
 * Add test coverage
 * Serve images from an API or CDN to optimize and serve images on-the-fly
